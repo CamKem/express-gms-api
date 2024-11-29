@@ -7,6 +7,14 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Cam Kemshal-Bell",
+  "contributors": [
+    {
+      "attribution": "Original Author",
+      "name": "Michael Kirkwood-Smith",
+      "email": "michael.kirkwood-smith3@tafensw.edu.au",
+      "url": "https://www.linkedin.com/in/michaelkirkwoodsmith/"
+    }
+  ],
   "license": "MIT",
   "dependencies": {
     "bcrypt": "^5.1.0",
