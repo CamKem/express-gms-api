@@ -1,10 +1,18 @@
+import { InternalServerError, ResponsableError } from '../utils/errors.js';
+
 export default function errorHandler(err, req, res, next) {
-    if (!err instanceof Error) {
+    if (!(err instanceof Error)) {
+        console.log('Error is not an instance of Error');
         err = new Error(err);
     }
 
     // Log the error for internal use
     console.error(err.stack);
+
+    // If the error is not a ResponsableError & not dev env, return Internal Server Error
+    if (!(err instanceof ResponsableError) && process.env.NODE_ENV !== 'development') {
+        err = new InternalServerError();
+    }
 
     const errorResponse = {
         statusCode: err.statusCode || 500,
@@ -19,14 +27,6 @@ export default function errorHandler(err, req, res, next) {
         errorResponse.details = err.details;
     }
 
-    // if it's a Error object, and not a custom error we have defined, we only want to resturn a response
-    // if we are in development mode, otherwise we will return a custom error BadRequest or InternalServerError
-    // the most appropriate error for the situation, being a generlized error message would to use InternalServerError
-    if (err instanceof Error && !err.statusCode) {
-        errorResponse.statusCode = process.env.NODE_ENV === 'development' ? 500 : 400;
-        errorResponse.error = getErrorName(errorResponse.statusCode);
-        errorResponse.message = process.env.NODE_ENV === 'development' ? err.message : 'An internal server error occurred.';
-    }
     res.status(errorResponse.statusCode).json(errorResponse);
 }
 
