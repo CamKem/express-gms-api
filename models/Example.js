@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 // Define Mongoose schema's properties/structure
 // DOCS: Each schema maps to a MongoDB collection and defines the shape of the documents within that collection.
@@ -38,4 +38,6 @@ const schema = new mongoose.Schema({
 // Convert schema to Mongoose model
 // DOCS: Models are responsible for creating and reading documents from the underlying MongoDB database.
 // DOCS: Mongoose automatically looks for the plural, lowercased version of your model name
-module.exports = mongoose.model('Example', schema)
+const Example = mongoose.model('Example', schema)
+
+export default Example;
