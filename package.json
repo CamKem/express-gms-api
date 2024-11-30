@@ -4,7 +4,7 @@
   "description": "Grocery Management System Backend API",
   "main": "index.js",
   "scripts": {
-    "monitor": "nodemon index.js",
+    "monitor": "nodemon index.js --trace-warnings",
     "serve": "node index.js",
     "test": "echo \"TODO: Install Jest and write tests\""
   },
