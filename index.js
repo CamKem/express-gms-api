@@ -6,7 +6,6 @@ import apiRouter from './routes/apiRouter.js';
 import rootRouter from './routes/rootRouter.js';
 import errorHandler from './middleware/errorHandler.js';
 import { NotFoundError } from './utils/errors.js';
-import responseHelpers from "./utils/responseHelpers.js";
 
 // Load environment variables
 dotenv.config();
@@ -18,7 +17,6 @@ const host = process.env.APP_HOST || 'http://localhost';
 
 // Middleware
 app.use(express.json());
-app.use(responseHelpers);
 app.use(cors({
     origin: "*",
     methods: "GET,HEAD,POST,PUT,PATCH,DELETE",
