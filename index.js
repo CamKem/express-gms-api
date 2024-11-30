@@ -1,24 +1,19 @@
 // Require dependencies
-const express = require('express')
-const cors = require('cors')
-const mongoose = require('mongoose')
+import express from 'express';
+import cors from 'cors';
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+import imp from "./utils/import.js";
+import dynamicRouter from "./middleware/dynamicRouter.js";
 
-// Setup the basic Express app
-const app = express()
-const port = 3000
+// Load env vars and setup defaults for app
+dotenv.config()
+const app = express();
+const port = process.env.APP_PORT;
+const host = process.env.APP_HOST;
 
-/* 
- * MongoDB connection string
- * 
- * Examples:
- * 
- *   - localhost with no authentication
- *     mongodb://{server}:{port}/{default_db}
- * 
- *   - localhost with basic authentication (username + password)
- *     mongodb://{username}:{password}@{server}:{port}/{default_db}?authSource={auth_db}&authMechanism={auth_type}
- */
-const dbConnectionString = ``
+// MongoDB connection string
+const dbConnectionString = process.env.DB_CONNECTION_STRING;
 
 // Config API to automatically parse incoming JSON requests (put parsed data in req.body)
 app.use(express.json())
@@ -31,55 +26,56 @@ app.use(cors({
   optionsSuccessStatus: 200  // 204 is not liked by some legacy browsers (IE11, smart TVs, etc)
 }))
 
-// Store Mongoose DB connection to MongoDB database
-const dbConnection = mongoose.connection
-
-// OPTIONAL: Code to run if Mongoose connects successfully
-// dbConnection.once("connected", () => {
-//   console.log("DB connected successfully! 😀")
-// })
-
 // Error handler for any Mongoose database errors
-dbConnection.on("error", (err) => {
+mongoose.connection.on("error", (err) => {
   console.log("DB error: " + err)
 })
 
 // Using Mongoose to connect to our MongoDB database
-mongoose
-  // Try connecting to the database (Navy MongoDB)
-  .connect(dbConnectionString)
-  // Success - connected to DB 😀
+mongoose.connect(dbConnectionString)
   .then(() => {
+      console.log("DB connected successfully! 😀")
 
-    console.log("DB connected successfully! 😀")
+      // Home route
+      app.get('/', (req, res) => {
+          res.send('This is an API for testing MongoDB connectivity. You should use /api/v1/')
+      })
 
-    // Routing using controllers (breaking logic into separate files/locations)
-    // Everything for /api/v1 is in /controllers/api_v1/...
-    app.use('/api/v1/examples', require('./controllers/api_v1/examples'));
+      // Documentation route
+      app.get('/docs', (req, res) => {
+            res.send('This is the documentation for the API')
+      });
+
+      // catch all routes that are not '/api' or '/' (home) and return the 404 respoense
+      app.use(async (req, res) => {
+          // if the path is /api then run the dynamic router
+            if (req.url.startsWith('/api')) {
+                console.log('running dynamic router', req.url);
+                return await dynamicRouter(req, res);
+            }
+
+          if (!req.url.startsWith('/api') || req.url !== '/') {
+              const invalidRouteResponse = {
+                  'message': 'Invalid link, please check the API docs.',
+                  'documentation': 'http://localhost:3000/api/v1/'
+              }
+              res.status(404).send(invalidRouteResponse)
+          }
+      })
+
+
+      const currentFile = decodeURIComponent(import.meta.url);
+      const comparisonFile = `file://${decodeURIComponent(process.argv[1])}`;
+      // OPTIONAL: Code section that will run only if the current file is the entry point.
+      // CJS: if (require.main === module) {
+      if (currentFile === comparisonFile) {
+          app.listen(port, () => {
+              console.log(`API listening on ${host}:${port}`)
+          })
+      }
 
   })
-  // Error - problem connecting to DB ❌
   .catch((err) => {
-    
-    // Handle errors for the initial database connection
     console.error("Database connection error: " + err)
-
-    // OPTIONAL: Kill Node server, otherwise it will run using ONLY the default routes below
-    // This forcefully exists using error state (1)
     process.exit(1)
-  })
-
-// Default routes of app
-app.get('/', (req, res) => {
-  res.send('This is an API for testing MongoDB connectivity. You should use /api/v1/')
-})
-
-// OPTIONAL: Code section that will run only if current file is the entry point.
-if (require.main === module) {
-
-  // Start the API listening (waiting for connections)
-  app.listen(port, () => {
-    console.log(`Testing API listening on port ${port}`)
-  })
-
-}
+});
