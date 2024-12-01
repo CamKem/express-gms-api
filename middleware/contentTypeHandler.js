@@ -1,5 +1,4 @@
 import {NotAcceptableError, UnsupportedMediaTypeError} from "../utils/errors.js";
-import express from 'express';
 
 /**
  *  Check the content-type and accept headers of the request
@@ -12,21 +11,6 @@ const contentTypeHandler = async (req, res, next) => {
     if (['POST', 'PUT', 'PATCH'].includes(req.method)) {
         if (!req.headers['content-type'] || req.headers['content-type'] !== 'application/json') {
             throw new UnsupportedMediaTypeError('Content-Type must be application/json');
-        }
-
-        // Check if the request body is valid JSON & set req.body
-        const validJson = await new Promise((resolve) => {
-            express.json()(req, res, (err) => {
-                if (err) {
-                    resolve(false);
-                } else {
-                    resolve(true);
-                }
-            });
-        });
-
-        if (!validJson) {
-            throw new NotAcceptableError('Request body must contain valid JSON');
         }
     }
 
