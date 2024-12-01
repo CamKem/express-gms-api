@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "monitor": "nodemon index.js --trace-warnings",
-    "serve": "node index.js",
-    "test": "jest"
+    "serve": "node index.js --trace-warnings",
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "type": "module",
   "author": "Cam Kemshal-Bell",
