@@ -3,6 +3,9 @@ import fs from 'fs';
 import {NotFoundError, UnprocessableEntityError} from "../utils/errors.js";
 import * as path from "node:path";
 import * as fsPromises from "node:fs/promises";
+import contentTypeHandler from "../middleware/contentTypeHandler.js";
+import jsonParser from "../middleware/jsonParser.js";
+import {setValue} from "../utils/setValue.js";
 
 const apiRouter = express.Router();
 
@@ -38,11 +41,11 @@ apiVersionDirs.forEach((apiVersionDir) => {
 
 const currentVersionNumber = Math.max(...Object.keys(routeMap)
     .map((version) => parseInt(version.replace('v', ''), 10)));
-const currentVersion = `v${currentVersionNumber}`;
+const currentVersion = setValue(`v${currentVersionNumber}`, 'v1');
 
 apiRouter.use(async (request, response, next) => {
-    const version = request.url.split('/')[1];
-    const versionNumber = parseInt(version.replace('v', ''), 10);
+    const version = setValue(request.url.split('/')[1], null);
+    const versionNumber = setValue(parseInt(version.replace('v', ''), 10), 0);
 
     if (!version || !/^v\d+$/.test(version)) {
         throw new NotFoundError('No API version specified')
@@ -62,25 +65,32 @@ apiRouter.use(async (request, response, next) => {
 
 for (const [version, resources] of Object.entries(routeMap)) {
     resources.forEach((resource) => {
-        apiRouter.use(`/${version}/${resource}`, async (req, res, next) => {
+        const routePath = `/${version}/${resource}`;
+        const resourceRouter = express.Router();
+
+        resourceRouter.use(contentTypeHandler);
+        resourceRouter.use(jsonParser);
+
+
+        resourceRouter.use(async (req, res, next) => {
             try {
                 const controllerPath = path.resolve('controllers', `api_${version}`, `${resource}.js`);
+
                 const controllerModule = await import(controllerPath);
                 const controller = controllerModule.default;
 
                 if (typeof controller !== 'function' || !(controller instanceof express.Router)) {
-                        throw new Error('Invalid controller configuration');
+                    throw new Error('Invalid controller configuration');
                 }
-
-                // Adjust request URL
-                req.url = req.url.slice(`/v${version}/${resource}`.length) || '/';
 
                 return controller(req, res, next);
             } catch (err) {
                 next(err);
             }
         });
-    })
+
+        apiRouter.use(routePath, resourceRouter);
+    });
 }
 
 export { apiRouter, routeMap };
