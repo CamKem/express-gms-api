@@ -1,18 +1,20 @@
 import express from "express";
 const rootRouter = express.Router();
+import {Response} from "../utils/responses.js";
 
-rootRouter.use((req, res, next) => {
-    // Default route
-    if (req.url === '/') {
-        res.success('Homepage for the GMS API');
-    }
+rootRouter.get('/', (req, res, next) => {
+    res.type('text/html');
+    new Response(req)
+        // TODO: write a landing page for accessing the API
+        //  and send a html file to be rendered here
+        .send('This is an API for testing MongoDB connectivity. You should use /api/v1/')
+});
 
-    // Documentation route
-    if (req.url === '/docs') {
-        res.success('Documentation for the GMS API');
-    }
-
-    return next();
+rootRouter.get('/docs', (req, res, next) => {
+    new Response(req)
+        // TODO: actually write the documentation
+        //  and send a html file to be rendered here
+        .send('This is the documentation for the API');
 });
 
 export default rootRouter;
