@@ -17,6 +17,8 @@
 - INVALID_API_VERSION: The provided API version was invalid. (422)
 - RESOURCE_NOT_FOUND: The requested resource was not found. (404)
 
+
+
 # Possible Future Additions (4xx)
 ### 401 Unauthorized
 - INVALID_CREDENTIALS: The provided credentials were invalid. (401)
