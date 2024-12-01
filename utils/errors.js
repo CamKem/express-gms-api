@@ -5,6 +5,11 @@ class ResponsableError extends Error {
         this.statusCode = statusCode;
         this.details = details;
     }
+
+    withDetails(details) {
+        this.details = details;
+        return this;
+    }
 }
 
 class BadRequestError extends ResponsableError {
