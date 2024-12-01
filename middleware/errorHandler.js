@@ -1,38 +1,29 @@
 import { InternalServerError, ResponsableError } from '../utils/errors.js';
 import {setValue} from "../utils/setValue.js";
+import logger from "../utils/logger.js";
+import {ErrorResponse} from "../utils/responses.js";
 
 export default function errorHandler(err, req, res, next) {
-    if (!(err instanceof Error)) {
-        console.log('Error is not an instance of Error');
-        err = new Error(err);
-    }
+    if (!(err instanceof Error)) err = new Error(err);
 
-    // Log the error for internal use
-    console.error(err.stack);
-
-    // If the error is not a ResponsableError & not dev env, return Internal Server Error
-    if (!(err instanceof ResponsableError) && process.env.NODE_ENV !== 'development') {
+    // If the error is not a ResponsableError, return Internal Server Error
+    if (!(err instanceof ResponsableError)) {
+        logger(err.message, 'error', err.stack);
         err = new InternalServerError();
     }
 
-    // Prepare the error response
-    const errorResponse = {
-        statusCode: setValue(err.statusCode, 500),
-        error: setValue(err.error, 'Internal Server Error'),
-        message: setValue(err.message, 'An error occurred while processing your request'),
-        path: setValue(err.path, req.originalUrl),
-        timestamp: setValue(err.timestamp, new Date().toISOString()),
-    };
+    // Send the error response
+    new ErrorResponse(req)
+        .statusCode(setValue(err.statusCode, 500))
+        .code(setValue(err.code, 'INTERNAL_SERVER_ERROR'))
+        .requestId(req.requestId)
+        .docsUrl(setValue(err.documentation_url, `${process.env.APP_URL}/docs/errors#${err.code}`))
+        .send({
+            message: setValue(err.message, 'An error occurred while processing your request'),
+            details: setValue(err.details, ''),
+            timestamp: setValue(err.timestamp, new Date().toISOString()),
+            path: setValue(err.path, req.originalUrl)
+        });
 
-    // Include additional details if provided
-    if (err.details) {
-        errorResponse.details = err.details;
-    }
-
-    // if its dev env, include the stack trace
-    if (process.env.APP_ENV === 'development') {
-        errorResponse.stack = err.stack;
-    }
-
-    res.status(errorResponse.statusCode).json(errorResponse);
+    next();
 }
