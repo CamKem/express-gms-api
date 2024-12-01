@@ -6,7 +6,6 @@ import { apiRouter } from './routes/apiRouter.js';
 import rootRouter from './routes/rootRouter.js';
 import fallbackRouter from './routes/fallbackRouter.js';
 import errorHandler from './middleware/errorHandler.js';
-import contentTypeHandler from './middleware/contentTypeHandler.js';
 import {setValue} from "./utils/setValue.js";
 import setUniqueRequestId from "./middleware/setUniqueRequestId.js";
 import rateLimiter from "./middleware/rateLimiter.js";
@@ -22,7 +21,6 @@ const host = setValue(process.env.APP_HOST, 'http://localhost');
 // Middleware
 app.use(rateLimiter);
 app.use(setUniqueRequestId);
-app.use(contentTypeHandler);
 // TODO: work out if we need this:
 //  app.use(express.urlencoded({extended: true}));
 app.use(cors({
