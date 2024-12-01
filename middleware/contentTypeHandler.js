@@ -2,8 +2,8 @@ import {NotAcceptableError, UnsupportedMediaTypeError} from "../utils/errors.js"
 import express from 'express';
 
 /**
- *  Middleware to check the request content type
- *  JSDoc
+ *  Check the content-type and accept headers of the request
+ *  Parse the request body if it is valid JSON
  *  @param {Request} req - The request object
  *  @param {Response} res - The response object
  *  @param {NextFunction} next - The next function
