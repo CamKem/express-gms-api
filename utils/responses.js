@@ -61,4 +61,18 @@ class ErrorResponse extends APIResponse {
     }
 }
 
-export { APIResponse, ErrorResponse };
+class Response {
+    constructor(request) {
+        this.request = request;
+        this.status_code = 200;
+    }
+
+    send(view) {
+        this.request.res
+            .status(this.status_code)
+            .type('text/html')
+            .send(view);
+    }
+}
+
+export { APIResponse, ErrorResponse, Response };
