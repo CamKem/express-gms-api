@@ -9,7 +9,6 @@ import {setValue} from "../utils/setValue.js";
  * @type {function(*, *, *): void}
  * @returns {void}
  */
-
 const setUniqueRequestId = (req, res, next) => {
     req.requestId = setValue(req.requestId, uuidv5(Date.now().toString(), uuidv5.URL));
     next();
