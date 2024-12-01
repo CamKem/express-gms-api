@@ -1,4 +1,5 @@
 import { InternalServerError, ResponsableError } from '../utils/errors.js';
+import {setValue} from "../utils/setValue.js";
 
 export default function errorHandler(err, req, res, next) {
     if (!(err instanceof Error)) {
@@ -14,12 +15,13 @@ export default function errorHandler(err, req, res, next) {
         err = new InternalServerError();
     }
 
+    // Prepare the error response
     const errorResponse = {
-        statusCode: err.statusCode || 500,
-        error: getErrorName(err.statusCode),
-        message: err.message || 'Internal Server Error',
-        path: req.originalUrl,
-        timestamp: new Date().toISOString(),
+        statusCode: setValue(err.statusCode, 500),
+        error: setValue(err.error, 'Internal Server Error'),
+        message: setValue(err.message, 'An error occurred while processing your request'),
+        path: setValue(err.path, req.originalUrl),
+        timestamp: setValue(err.timestamp, new Date().toISOString()),
     };
 
     // Include additional details if provided
@@ -27,17 +29,10 @@ export default function errorHandler(err, req, res, next) {
         errorResponse.details = err.details;
     }
 
-    res.status(errorResponse.statusCode).json(errorResponse);
-}
+    // if its dev env, include the stack trace
+    if (process.env.APP_ENV === 'development') {
+        errorResponse.stack = err.stack;
+    }
 
-// Get error names based on status codes
-function getErrorName(statusCode) {
-    const errorNames = {
-        400: 'Bad Request',
-        401: 'Unauthorized',
-        403: 'Forbidden',
-        404: 'Not Found',
-        500: 'Internal Server Error',
-    };
-    return errorNames[statusCode] || 'Error';
+    res.status(errorResponse.statusCode).json(errorResponse);
 }
