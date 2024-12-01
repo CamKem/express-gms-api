@@ -2,23 +2,29 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import mongoose from 'mongoose';
-import apiRouter from './routes/apiRouter.js';
+import { apiRouter } from './routes/apiRouter.js';
 import rootRouter from './routes/rootRouter.js';
+import fallbackRouter from './routes/fallbackRouter.js';
 import errorHandler from './middleware/errorHandler.js';
 import contentTypeHandler from './middleware/contentTypeHandler.js';
-import {NotFoundError} from './utils/errors.js';
+import {setValue} from "./utils/setValue.js";
+import setUniqueRequestId from "./middleware/setUniqueRequestId.js";
+import rateLimiter from "./middleware/rateLimiter.js";
 
 // Load environment variables
 dotenv.config();
 
 // App Setup
 const app = express();
-const port = process.env.APP_PORT || 3000;
-const host = process.env.APP_HOST || 'http://localhost';
+const port = setValue(process.env.APP_PORT, 3000);
+const host = setValue(process.env.APP_HOST, 'http://localhost');
 
 // Middleware
+app.use(rateLimiter);
+app.use(setUniqueRequestId);
 app.use(contentTypeHandler);
-// app.use(express.urlencoded({extended: true}));
+// TODO: work out if we need this:
+//  app.use(express.urlencoded({extended: true}));
 app.use(cors({
     origin: "*",
     methods: "GET,HEAD,POST,PUT,PATCH,DELETE",
@@ -28,13 +34,9 @@ app.use(cors({
 // Routers
 app.use('/', rootRouter);
 app.use('/api', apiRouter);
+app.use(fallbackRouter);
 
-// 404 Handler for Undefined Routes
-app.use((req, res, next) => {
-    next(new NotFoundError);
-});
-
-// Global Error Handler
+// Global Error/Exception Handler
 app.use(errorHandler);
 
 // Mongoose Connection Error Handler
