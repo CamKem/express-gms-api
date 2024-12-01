@@ -6,7 +6,7 @@
   "scripts": {
     "monitor": "nodemon index.js --trace-warnings",
     "serve": "node index.js",
-    "test": "echo \"TODO: Install Jest and write tests\""
+    "test": "node rate_limiter.test.js"
   },
   "type": "module",
   "author": "Cam Kemshal-Bell",
@@ -20,12 +20,15 @@
   ],
   "license": "MIT",
   "dependencies": {
+    "@sentry/node": "^8.41.0",
     "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^5.0.1",
+    "express-rate-limit": "^7.4.1",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.8.3",
+    "node-fetch": "^3.3.2",
     "swagger-ui-express": "^5.0.1",
     "uuid": "^9.0.1"
   },
