@@ -11,7 +11,6 @@ import express from 'express';
 const contentTypeHandler = async (req, res, next) => {
     if (['POST', 'PUT', 'PATCH'].includes(req.method)) {
         if (!req.headers['content-type'] || req.headers['content-type'] !== 'application/json') {
-            // 415 Unsupported Media Type
             throw new UnsupportedMediaTypeError('Content-Type must be application/json');
         }
 
