@@ -3,9 +3,9 @@ import fs from 'fs';
 import {NotFoundError, UnprocessableEntityError} from "../utils/errors.js";
 import * as path from "node:path";
 import * as fsPromises from "node:fs/promises";
-import contentTypeHandler from "../middleware/contentTypeHandler.js";
 import jsonParser from "../middleware/jsonParser.js";
 import {setValue} from "../utils/setValue.js";
+import contentNegotiator from "../middleware/contentNegotiator.js";
 
 const apiRouter = express.Router();
 
@@ -25,18 +25,6 @@ apiVersionDirs.forEach((apiVersionDir) => {
         const resource = path.basename(file, '.js');
         routeMap[version].push(resource);
     });
-
-    // NOTE: bfore too much business logic implemented
-    //  consider moving to version specific routers:
-    //     const versionRouter = express.Router();
-    //     // Define routes for this version
-    //     resourceFiles.forEach((file) => {
-    //         const resource = path.basename(file, '.js');
-    //         const resourceRouter = express.Router();
-    //         // Dynamically import and use the controller
-    //         versionRouter.use(`/${resource}`, resourceRouter);
-    //     });
-    //     apiRouter.use(`/${version}`, versionRouter);
 });
 
 const currentVersionNumber = Math.max(...Object.keys(routeMap)
@@ -50,7 +38,7 @@ apiRouter.use(async (request, response, next) => {
     if (!version || !/^v\d+$/.test(version)) {
         throw new NotFoundError('No API version specified')
             .withDetails('Please specify an an API version and check the documentation')
-            .withCode('NO_API_VERSION');
+            .withCode('VERSION_NOT_SPECIFIED');
     }
 
     const folderPath = path.resolve('controllers', `api_v${versionNumber}`);
@@ -68,9 +56,8 @@ for (const [version, resources] of Object.entries(routeMap)) {
         const routePath = `/${version}/${resource}`;
         const resourceRouter = express.Router();
 
-        resourceRouter.use(contentTypeHandler);
+        resourceRouter.use(contentNegotiator);
         resourceRouter.use(jsonParser);
-
 
         resourceRouter.use(async (req, res, next) => {
             try {
