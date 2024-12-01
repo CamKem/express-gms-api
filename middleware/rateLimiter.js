@@ -1,6 +1,10 @@
-// Purpose: Rate limiter middleware to limit the number of requests to the server.
 import { rateLimit } from 'express-rate-limit'
 
+/**
+ * Rate limiter middleware
+ * Limits the number of requests from a single IP address
+ * @type {Function}
+ */
 const rateLimiter = rateLimit({
     windowMs: 60 * 1000, // 1 minute
     max: 100, // 100 requests per minute
