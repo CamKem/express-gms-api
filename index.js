@@ -5,7 +5,8 @@ import mongoose from 'mongoose';
 import apiRouter from './routes/apiRouter.js';
 import rootRouter from './routes/rootRouter.js';
 import errorHandler from './middleware/errorHandler.js';
-import { NotFoundError } from './utils/errors.js';
+import contentTypeHandler from './middleware/contentTypeHandler.js';
+import {NotFoundError} from './utils/errors.js';
 
 // Load environment variables
 dotenv.config();
@@ -16,7 +17,8 @@ const port = process.env.APP_PORT || 3000;
 const host = process.env.APP_HOST || 'http://localhost';
 
 // Middleware
-app.use(express.json());
+app.use(contentTypeHandler);
+// app.use(express.urlencoded({extended: true}));
 app.use(cors({
     origin: "*",
     methods: "GET,HEAD,POST,PUT,PATCH,DELETE",
@@ -31,6 +33,7 @@ app.use('/api', apiRouter);
 app.use((req, res, next) => {
     next(new NotFoundError);
 });
+
 // Global Error Handler
 app.use(errorHandler);
 
