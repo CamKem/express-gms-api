@@ -1,0 +1,418 @@
+[
+  {
+    "_id": {
+      "$oid": "674836adb325e3312bfc27fe"
+    },
+    "orderNo": 2064,
+    "orderDate": "1/01/2023",
+    "customerNo": 98584396,
+    "paymentMethod": "Cash",
+    "productSku": "FR-9811-01",
+    "productName": "Mango and Macadamia Icecream",
+    "productPrice": 6.5,
+    "quantity": 3
+  },
+  {
+    "_id": {
+      "$oid": "674836adb325e3312bfc2802"
+    },
+    "orderNo": 2066,
+    "orderDate": "1/01/2023",
+    "customerNo": 73833614,
+    "paymentMethod": "Cash",
+    "productSku": "FV-0199-01",
+    "productName": "Blueberries Prepacked",
+    "productPrice": 4.5,
+    "quantity": 2
+  },
+  {
+    "_id": {
+      "$oid": "674836adb325e3312bfc2803"
+    },
+    "orderNo": 2067,
+    "orderDate": "1/01/2023",
+    "customerNo": 83177490,
+    "paymentMethod": "Credit Card",
+    "productSku": "BA-0912-02",
+    "productName": "Rustic White Bread Sliced",
+    "productPrice": 4.3,
+    "quantity": 15
+  },
+  {
+    "_id": {
+      "$oid": "674836adb325e3312bfc2804"
+    },
+    "orderNo": 2068,
+    "orderDate": "1/01/2023",
+    "customerNo": 65872358,
+    "paymentMethod": "Cash",
+    "productSku": "DE-9918-03",
+    "productName": "Smoked Leg Ham (per kg)",
+    "productPrice": 29.5,
+    "quantity": 2.2
+  },
+  {
+    "_id": {
+      "$oid": "674836adb325e3312bfc2805"
+    },
+    "orderNo": 2068,
+    "orderDate": "1/01/2023",
+    "customerNo": 65872358,
+    "paymentMethod": "Cash",
+    "productSku": "BA-2220-03",
+    "productName": "Hot Cross Buns Original",
+    "productPrice": 5.2,
+    "quantity": 172
+  },
+  {
+    "_id": {
+      "$oid": "674836adb325e3312bfc2806"
+    },
+    "orderNo": 2069,
+    "orderDate": "2/01/2023",
+    "customerNo": 95637650,
+    "paymentMethod": "Credit Card",
+    "productSku": "FV-9188-03",
+    "productName": "Fresh Bananas (per kg)",
+    "productPrice": 3.2,
+    "quantity": 4
+  },
+  {
+    "_id": {
+      "$oid": "674836adb325e3312bfc2807"
+    },
+    "orderNo": 2070,
+    "orderDate": "2/01/2023",
+    "customerNo": 65365555,
+    "paymentMethod": "Credit Card",
+    "productSku": "FR-9811-01",
+    "productName": "Mango and Macadamia Icecream",
+    "productPrice": 6.5,
+    "quantity": 14
+  },
+  {
+    "_id": {
+      "$oid": "674836adb325e3312bfc2808"
+    },
+    "orderNo": 2071,
+    "orderDate": "2/01/2023",
+    "customerNo": 53735299,
+    "paymentMethod": "Cash",
+    "productSku": "FV-0199-01",
+    "productName": "Blueberries Prepacked",
+    "productPrice": 4.5,
+    "quantity": 10
+  },
+  {
+    "_id": {
+      "$oid": "674836adb325e3312bfc2809"
+    },
+    "orderNo": 2072,
+    "orderDate": "2/01/2023",
+    "customerNo": 83177490,
+    "paymentMethod": "Credit Card",
+    "productSku": "FV-0199-01",
+    "productName": "Blueberries Prepacked",
+    "productPrice": 4.5,
+    "quantity": 4
+  },
+  {
+    "_id": {
+      "$oid": "674836adb325e3312bfc280a"
+    },
+    "orderNo": 2072,
+    "orderDate": "2/01/2023",
+    "customerNo": 83177490,
+    "paymentMethod": "Credit Card",
+    "productSku": "DE-0187-01",
+    "productName": "Natural Beef Sausages (6)",
+    "productPrice": 12.5,
+    "quantity": 2
+  },
+  {
+    "_id": {
+      "$oid": "674836adb325e3312bfc280b"
+    },
+    "orderNo": 2072,
+    "orderDate": "2/01/2023",
+    "customerNo": 83177490,
+    "paymentMethod": "Credit Card",
+    "productSku": "FR-9811-01",
+    "productName": "Mango and Macadamia Icecream",
+    "productPrice": 6.5,
+    "quantity": 1
+  },
+  {
+    "_id": {
+      "$oid": "674836adb325e3312bfc280c"
+    },
+    "orderNo": 2072,
+    "orderDate": "2/01/2023",
+    "customerNo": 83177490,
+    "paymentMethod": "Credit Card",
+    "productSku": "FR-2999-03",
+    "productName": "Frozen Meat Pies (4 pack)",
+    "productPrice": 8.5,
+    "quantity": 16
+  },
+  {
+    "_id": {
+      "$oid": "674836adb325e3312bfc280d"
+    },
+    "orderNo": 2073,
+    "orderDate": "3/01/2023",
+    "customerNo": 98584396,
+    "paymentMethod": "Cash",
+    "productSku": "DE-9918-03",
+    "productName": "Smoked Leg Ham (per kg)",
+    "productPrice": 29.5,
+    "quantity": 9
+  },
+  {
+    "_id": {
+      "$oid": "674836adb325e3312bfc280e"
+    },
+    "orderNo": 2074,
+    "orderDate": "3/01/2023",
+    "customerNo": 65782164,
+    "paymentMethod": "Cash",
+    "productSku": "BA-0182-01",
+    "productName": "Gluten Free Soft Rolls",
+    "productPrice": 4,
+    "quantity": 6
+  },
+  {
+    "_id": {
+      "$oid": "674836adb325e3312bfc280f"
+    },
+    "orderNo": 2075,
+    "orderDate": "3/01/2023",
+    "customerNo": 80930946,
+    "paymentMethod": "Cash",
+    "productSku": "FV-9188-03",
+    "productName": "Fresh Bananas (per kg)",
+    "productPrice": 3.2,
+    "quantity": 5
+  },
+  {
+    "_id": {
+      "$oid": "674836adb325e3312bfc2810"
+    },
+    "orderNo": 2076,
+    "orderDate": "3/01/2023",
+    "customerNo": 99714543,
+    "paymentMethod": "Cash",
+    "productSku": "FR-9811-01",
+    "productName": "Mango and Macadamia Icecream",
+    "productPrice": 6.5,
+    "quantity": 2
+  },
+  {
+    "_id": {
+      "$oid": "674836adb325e3312bfc2811"
+    },
+    "orderNo": 2076,
+    "orderDate": "3/01/2023",
+    "customerNo": 99714543,
+    "paymentMethod": "Cash",
+    "productSku": "DE-9918-03",
+    "productName": "Smoked Leg Ham (per kg)",
+    "productPrice": 29.5,
+    "quantity": 1.5
+  },
+  {
+    "_id": {
+      "$oid": "674836adb325e3312bfc2812"
+    },
+    "orderNo": 2077,
+    "orderDate": "3/01/2023",
+    "customerNo": 37450092,
+    "paymentMethod": "Cash",
+    "productSku": "BA-0182-01",
+    "productName": "Gluten Free Soft Rolls",
+    "productPrice": 4,
+    "quantity": 5
+  },
+  {
+    "_id": {
+      "$oid": "674836adb325e3312bfc2813"
+    },
+    "orderNo": 2078,
+    "orderDate": "3/01/2023",
+    "customerNo": 74964833,
+    "paymentMethod": "Credit Card",
+    "productSku": "BA-0912-02",
+    "productName": "Rustic White Bread Sliced",
+    "productPrice": 4.3,
+    "quantity": 12
+  },
+  {
+    "_id": {
+      "$oid": "674836adb325e3312bfc2814"
+    },
+    "orderNo": 2079,
+    "orderDate": "3/01/2023",
+    "customerNo": 72850114,
+    "paymentMethod": "Credit Card",
+    "productSku": "BA-2220-03",
+    "productName": "Hot Cross Buns Original",
+    "productPrice": 5.2,
+    "quantity": 151
+  },
+  {
+    "_id": {
+      "$oid": "674836adb325e3312bfc2815"
+    },
+    "orderNo": 2080,
+    "orderDate": "3/01/2023",
+    "customerNo": 94475168,
+    "paymentMethod": "Credit Card",
+    "productSku": "FV-9188-03",
+    "productName": "Fresh Bananas (per kg)",
+    "productPrice": 3.2,
+    "quantity": 20
+  },
+  {
+    "_id": {
+      "$oid": "674836adb325e3312bfc2816"
+    },
+    "orderNo": 2080,
+    "orderDate": "3/01/2023",
+    "customerNo": 94475168,
+    "paymentMethod": "Credit Card",
+    "productSku": "FR-2999-03",
+    "productName": "Frozen Meat Pies (4 pack)",
+    "productPrice": 8.5,
+    "quantity": 1
+  },
+  {
+    "_id": {
+      "$oid": "674836adb325e3312bfc2817"
+    },
+    "orderNo": 2080,
+    "orderDate": "3/01/2023",
+    "customerNo": 94475168,
+    "paymentMethod": "Credit Card",
+    "productSku": "BA-2220-03",
+    "productName": "Hot Cross Buns Original",
+    "productPrice": 5.2,
+    "quantity": 98
+  },
+  {
+    "_id": {
+      "$oid": "674836adb325e3312bfc2818"
+    },
+    "orderNo": 2081,
+    "orderDate": "4/01/2023",
+    "customerNo": 98584396,
+    "paymentMethod": "Cash",
+    "productSku": "BA-2220-03",
+    "productName": "Hot Cross Buns Original",
+    "productPrice": 5.2,
+    "quantity": 70
+  },
+  {
+    "_id": {
+      "$oid": "674836adb325e3312bfc2819"
+    },
+    "orderNo": 2082,
+    "orderDate": "4/01/2023",
+    "customerNo": 84322156,
+    "paymentMethod": "Cash",
+    "productSku": "BA-0912-02",
+    "productName": "Rustic White Bread Sliced",
+    "productPrice": 4.3,
+    "quantity": 20
+  },
+  {
+    "_id": {
+      "$oid": "674836adb325e3312bfc281a"
+    },
+    "orderNo": 2082,
+    "orderDate": "4/01/2023",
+    "customerNo": 84322156,
+    "paymentMethod": "Cash",
+    "productSku": "FV-0199-01",
+    "productName": "Blueberries Prepacked",
+    "productPrice": 4.5,
+    "quantity": 7
+  },
+  {
+    "_id": {
+      "$oid": "674836adb325e3312bfc281b"
+    },
+    "orderNo": 2083,
+    "orderDate": "4/01/2023",
+    "customerNo": 87276889,
+    "paymentMethod": "Cash",
+    "productSku": "FV-9188-03",
+    "productName": "Fresh Bananas (per kg)",
+    "productPrice": 3.2,
+    "quantity": 2
+  },
+  {
+    "_id": {
+      "$oid": "674846fae680dc2f2fc58568"
+    },
+    "orderNo": 2084,
+    "orderDate": "6/01/2023",
+    "customerNo": 94475168,
+    "paymentMethod": "Cash",
+    "productSku": "FV-9188-03",
+    "productName": "Fresh Bananas (per kg)",
+    "productPrice": 3.2,
+    "quantity": 4
+  },
+  {
+    "_id": {
+      "$oid": "6748474be680dc2f2fc58569"
+    },
+    "orderNo": 2085,
+    "orderDate": "7/01/2023",
+    "customerNo": 98584396,
+    "paymentMethod": "Credit Card",
+    "productSku": "FV-9188-03",
+    "productName": "Fresh Bananas (per kg)",
+    "productPrice": 3.2,
+    "quantity": 1.5
+  },
+  {
+    "_id": {
+      "$oid": "6748474be680dc2f2fc5856a"
+    },
+    "orderNo": 2086,
+    "orderDate": "7/01/2023",
+    "customerNo": 98584396,
+    "paymentMethod": "Credit Card",
+    "productSku": "FR-9811-01",
+    "productName": "Mango and Macadamia Icecream",
+    "productPrice": 6.5,
+    "quantity": 1
+  },
+  {
+    "_id": {
+      "$oid": "6748474be680dc2f2fc5856b"
+    },
+    "orderNo": 2087,
+    "orderDate": "8/01/2023",
+    "customerNo": 98584396,
+    "paymentMethod": "Credit Card",
+    "productSku": "FR-9811-01",
+    "productName": "Mango and Macadamia Icecream",
+    "productPrice": 6.5,
+    "quantity": 3
+  },
+  {
+    "_id": {
+      "$oid": "6748474be680dc2f2fc5856c"
+    },
+    "orderNo": 2088,
+    "orderDate": "8/01/2023",
+    "customerNo": 98584396,
+    "paymentMethod": "Credit Card",
+    "productSku": "FV-9188-03",
+    "productName": "Fresh Bananas (per kg)",
+    "productPrice": 3.2,
+    "quantity": 3.5
+  }
+]

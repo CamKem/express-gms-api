@@ -1,0 +1,122 @@
+[
+  {
+    "_id": {
+      "$oid": "67483697b325e3312bfc27f1"
+    },
+    "empId": 101,
+    "firstName": "Dwight",
+    "lastName": "Schrute",
+    "username": "dschrute",
+    "password": "OhSna8409!"
+  },
+  {
+    "_id": {
+      "$oid": "67483697b325e3312bfc27f2"
+    },
+    "empId": 102,
+    "firstName": "Michael",
+    "lastName": "Scott",
+    "username": "mscott",
+    "password": "DMyc9075@"
+  },
+  {
+    "_id": {
+      "$oid": "67483697b325e3312bfc27f3"
+    },
+    "empId": 103,
+    "firstName": "Jim",
+    "lastName": "Halpert",
+    "username": "jhalpert",
+    "password": "TGao8779#"
+  },
+  {
+    "_id": {
+      "$oid": "67483697b325e3312bfc27f4"
+    },
+    "empId": 104,
+    "firstName": "Oscar",
+    "lastName": "Martinez",
+    "username": "omartinez",
+    "password": "VJvd5390%"
+  },
+  {
+    "_id": {
+      "$oid": "67483697b325e3312bfc27f5"
+    },
+    "empId": 105,
+    "firstName": "Creed",
+    "lastName": "Bratton",
+    "username": "cbratton",
+    "password": "ACas5457#"
+  },
+  {
+    "_id": {
+      "$oid": "67483697b325e3312bfc27f6"
+    },
+    "empId": 106,
+    "firstName": "Pam",
+    "lastName": "Beesly",
+    "username": "pbeesly",
+    "password": "FGcr2671#"
+  },
+  {
+    "_id": {
+      "$oid": "67483697b325e3312bfc27f7"
+    },
+    "empId": 107,
+    "firstName": "Andy",
+    "lastName": "Bernard",
+    "username": "abernard",
+    "password": "EYtx7899%"
+  },
+  {
+    "_id": {
+      "$oid": "67483697b325e3312bfc27f8"
+    },
+    "empId": 108,
+    "firstName": "Erin",
+    "lastName": "Hannon",
+    "username": "ehannon",
+    "password": "KSls4154%"
+  },
+  {
+    "_id": {
+      "$oid": "67483697b325e3312bfc27f9"
+    },
+    "empId": 109,
+    "firstName": "Kevin",
+    "lastName": "Malone",
+    "username": "kmalone",
+    "password": "GKmh7906!"
+  },
+  {
+    "_id": {
+      "$oid": "67483697b325e3312bfc27fa"
+    },
+    "empId": 110,
+    "firstName": "Angela",
+    "lastName": "Martin",
+    "username": "amartin",
+    "password": "MPkr0573#"
+  },
+  {
+    "_id": {
+      "$oid": "67483697b325e3312bfc27fb"
+    },
+    "empId": 111,
+    "firstName": "Jan",
+    "lastName": "Levinson",
+    "username": "jlevinson",
+    "password": "YXzz7943!"
+  },
+  {
+    "_id": {
+      "$oid": "67483697b325e3312bfc27fc"
+    },
+    "empId": 112,
+    "firstName": "Stanley",
+    "lastName": "Hudson",
+    "username": "shudson",
+    "password": "RXfh8939!"
+  }
+]

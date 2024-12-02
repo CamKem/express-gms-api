@@ -1,0 +1,40 @@
+[
+  {
+    "_id": {
+      "$oid": "67483678b325e3312bfc27ee"
+    },
+    "customerNo": 97932458,
+    "products": [
+      {
+        "sku": "BB-8812-02",
+        "quantity": 7
+      },
+      {
+        "sku": "BA-2220-03",
+        "quantity": 3
+      }
+    ],
+    "createdAt": "2023-01-05"
+  },
+  {
+    "_id": {
+      "$oid": "67483678b325e3312bfc27ef"
+    },
+    "customerNo": 99714543,
+    "products": [
+      {
+        "sku": "DE-9918-03",
+        "quantity": 1.25
+      },
+      {
+        "sku": "FV-9188-03",
+        "quantity": 0.75
+      },
+      {
+        "sku": "BA-0912-02",
+        "quantity": 2
+      }
+    ],
+    "createdAt": "2023-01-07"
+  }
+]

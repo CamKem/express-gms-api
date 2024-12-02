@@ -1,0 +1,128 @@
+[
+  {
+    "_id": {
+      "$oid": "67482d7bb325e3312bfc27de"
+    },
+    "sku": "BA-0912-02",
+    "name": "Rustic White Bread Sliced",
+    "price": 4.51,
+    "stockOnHand": 42
+  },
+  {
+    "_id": {
+      "$oid": "67482d7bb325e3312bfc27df"
+    },
+    "sku": "BA-0182-01",
+    "name": "Gluten Free Soft Rolls",
+    "price": 4.2,
+    "stockOnHand": 128
+  },
+  {
+    "_id": {
+      "$oid": "67482d7bb325e3312bfc27e0"
+    },
+    "sku": "BA-2220-03",
+    "name": "Hot Cross Buns Original",
+    "price": 5.46,
+    "stockOnHand": 8227
+  },
+  {
+    "_id": {
+      "$oid": "67482d7bb325e3312bfc27e1"
+    },
+    "sku": "FV-9188-03",
+    "name": "Fresh Bananas (per kg)",
+    "price": 3.36,
+    "stockOnHand": 801
+  },
+  {
+    "_id": {
+      "$oid": "67482d7bb325e3312bfc27e2"
+    },
+    "sku": "FV-5561-01",
+    "name": "White Seedless Grapes Bunch",
+    "price": 4.73,
+    "stockOnHand": 28
+  },
+  {
+    "_id": {
+      "$oid": "67482d7bb325e3312bfc27e3"
+    },
+    "sku": "FV-0317-02",
+    "name": "Broccoli (per kg)",
+    "price": 4.09,
+    "stockOnHand": 40
+  },
+  {
+    "_id": {
+      "$oid": "67482d7bb325e3312bfc27e4"
+    },
+    "sku": "FV-0199-01",
+    "name": "Blueberries Prepacked",
+    "price": 4.73,
+    "stockOnHand": 98
+  },
+  {
+    "_id": {
+      "$oid": "67482d7bb325e3312bfc27e5"
+    },
+    "sku": "FV-8881-01",
+    "name": "Brown Onions (per kg)",
+    "price": 3.59,
+    "stockOnHand": 12
+  },
+  {
+    "_id": {
+      "$oid": "67482d7bb325e3312bfc27e6"
+    },
+    "sku": "DE-9918-03",
+    "name": "Smoked Leg Ham (per kg)",
+    "price": 30.98,
+    "stockOnHand": 34
+  },
+  {
+    "_id": {
+      "$oid": "67482d7bb325e3312bfc27e7"
+    },
+    "sku": "DE-0187-01",
+    "name": "Natural Beef Sausages (6)",
+    "price": 13.12,
+    "stockOnHand": 23
+  },
+  {
+    "_id": {
+      "$oid": "67482d7bb325e3312bfc27e8"
+    },
+    "sku": "FR-9811-01",
+    "name": "Mango and Macadamia Icecream",
+    "price": 6.83,
+    "stockOnHand": 7
+  },
+  {
+    "_id": {
+      "$oid": "67482d7bb325e3312bfc27e9"
+    },
+    "sku": "FR-2999-03",
+    "name": "Frozen Meat Pies (4 pack)",
+    "price": 8.93,
+    "stockOnHand": 77
+  },
+  {
+    "_id": {
+      "$oid": "67482d7bb325e3312bfc27eb"
+    },
+    "sku": "BB-8812-02",
+    "name": "Organic Baby Snacks",
+    "price": 149.62,
+    "stockOnHand": 34
+  },
+  {
+    "_id": {
+      "$oid": "67482d7bb325e3312bfc27ec"
+    },
+    "sku": "BB-8102-01",
+    "name": "Wet Wipes (80 pack)",
+    "price": 2.52,
+    "stockOnHand": 61
+  }
+]
