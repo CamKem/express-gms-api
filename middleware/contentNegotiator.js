@@ -8,11 +8,11 @@ import {NotAcceptableError, UnsupportedMediaTypeError} from "../utils/errors.js"
  *  @param {NextFunction} next - The next function
  *  @returns {NextFunction} - The next function
  *  @throws {UnsupportedMediaTypeError} - If the content-type is not application/json
- *  @throws {NotAcceptableError} - If the accept header does not allow application/json
+ *  @throws {NotAcceptableError} - If accept header does not allow application/json
  */
 const contentNegotiator = (req, res, next) => {
     if (['POST', 'PUT', 'PATCH'].includes(req.method)) {
-        if (!req.headers['content-type'] || !req.headers['content-type'].startsWith('application/json')) {
+        if (!req.get('Content-Type') || !req.is('application/json')) {
             throw new UnsupportedMediaTypeError('Content-Type must be application/json')
                 .withDetails(`Received Content-Type: ${req.headers['content-type']}`);
         }
