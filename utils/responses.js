@@ -37,7 +37,7 @@ class BaseResponse {
     }
 
     send(data) {
-        this.request.res.status(this.status_code)
+        return this.request.res.status(this.status_code)
             .json({
                 status: this.type,
                 code: this.response_code,
@@ -74,6 +74,13 @@ class ErrorResponse extends BaseResponse {
     }
 }
 
+/**
+ * Response class for handling non-API responses
+ *
+ * @constructor
+ * @param request
+ * @returns Response object
+ */
 class Response {
     constructor(request) {
         this.request = request;
@@ -81,7 +88,7 @@ class Response {
     }
 
     send(view) {
-        this.request.res
+        return this.request.res
             .status(this.status_code)
             .type('text/html')
             .send(view);

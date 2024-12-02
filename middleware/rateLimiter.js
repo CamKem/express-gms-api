@@ -3,6 +3,8 @@ import { rateLimit } from 'express-rate-limit'
 /**
  * Rate limiter middleware
  * Limits the number of requests from a single IP address
+ * JSDoc definition for rateLimit
+ * @param {Object} options - Rate limit options
  * @type {Function}
  * @returns {Function}
  */
@@ -11,6 +13,6 @@ const rateLimiter = rateLimit({
     max: 100, // 100 requests per minute
     message: 'Too many requests from this IP, please try again after a minute',
     headers: true,
-});
+})
 
 export default rateLimiter;

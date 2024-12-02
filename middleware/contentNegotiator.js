@@ -6,6 +6,9 @@ import {NotAcceptableError, UnsupportedMediaTypeError} from "../utils/errors.js"
  *  @param {Request} req - The request object
  *  @param {Response} res - The response object
  *  @param {NextFunction} next - The next function
+ *  @returns {NextFunction} - The next function
+ *  @throws {UnsupportedMediaTypeError} - If the content-type is not application/json
+ *  @throws {NotAcceptableError} - If the accept header does not allow application/json
  */
 const contentNegotiator = (req, res, next) => {
     if (['POST', 'PUT', 'PATCH'].includes(req.method)) {
@@ -21,7 +24,7 @@ const contentNegotiator = (req, res, next) => {
             .withCode('ACCEPT_HEADER_INVALID')
     }
 
-    next();
+    return next();
 };
 
 export default contentNegotiator;
