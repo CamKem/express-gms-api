@@ -22,8 +22,6 @@ const host = setValue(process.env.APP_HOST, 'http://localhost');
 // Middleware
 app.use(rateLimiter);
 app.use(setUniqueRequestId);
-// TODO: work out if we need this:
-//  app.use(express.urlencoded({extended: true}));
 app.use(cors({
     origin: "*",
     methods: "GET,HEAD,POST,PUT,PATCH,DELETE",
