@@ -22,10 +22,10 @@ export default function errorHandler(err, req, res, next) {
 
     // Send the error response
     return new ErrorResponse(req)
-        .statusCode(setValue(err.statusCode, 500))
-        .code(setValue(err.code, 'INTERNAL_SERVER_ERROR'))
-        .requestId(req.requestId)
-        .docsUrl(setValue(err.documentation_url, `${process.env.APP_URL}/docs/errors#${err.code}`))
+        .withStatusCode(setValue(err.statusCode, 500))
+        .withCode(setValue(err.code, 'INTERNAL_SERVER_ERROR'))
+        .withRequestId(req.requestId)
+        .withDocsUrl(setValue(err.documentation_url, `${process.env.APP_URL}/docs/errors#${err.code}`))
         .send({
             message: setValue(err.message, 'An error occurred while processing your request'),
             details: setValue(err.details, ''),

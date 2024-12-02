@@ -52,8 +52,6 @@ mongoose.connect(process.env.DB_CONNECTION_STRING)
                 console.log(`Server running on ${host}:${port}`);
             });
         }
-
-        console.log('Server setup complete');
     })
     .catch(err => {
         logger('error', 'DB Connection', err);

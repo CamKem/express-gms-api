@@ -16,22 +16,22 @@ class BaseResponse {
         this.docs_url = `${process.env.APP_HOST}/docs/${this.response_code}`;
     }
 
-    code(code) {
+    withCode(code) {
         this.response_code = code;
         return this;
     }
 
-    statusCode(statusCode) {
+    withStatusCode(statusCode) {
         this.status_code = statusCode;
         return this;
     }
 
-    requestId(requestId) {
+    withRequestId(requestId) {
         this.request_id = requestId;
         return this;
     }
 
-    docsUrl(docs_url) {
+    withDocsUrl(docs_url) {
         this.docs_url = docs_url;
         return this;
     }
@@ -81,18 +81,29 @@ class ErrorResponse extends BaseResponse {
  * @param request
  * @returns Response object
  */
-class Response {
+
+// Uncaught ReferenceError: Cannot access 'Response' before initialization/
+    // To fix this, we need to rename the Response class in the responses.js file to something else.
+
+class StdResponse extends Response {
     constructor(request) {
+        super();
         this.request = request;
         this.status_code = 200;
+        this.type = 'text/html';
+    }
+
+    asType(type) {
+        this.type = type;
+        return this;
     }
 
     send(view) {
         return this.request.res
             .status(this.status_code)
-            .type('text/html')
+            .type(this.type)
             .send(view);
     }
 }
 
-export { APIResponse, ErrorResponse, Response };
+export { APIResponse, ErrorResponse, StdResponse };

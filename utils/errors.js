@@ -58,7 +58,7 @@ class ResponsableError extends Error {
      * @param documentation_url
      * @returns {ResponsableError}
      */
-    withDocumentationUrl(documentation_url) {
+    withDocsUrl(documentation_url) {
         this.documentation_url = documentation_url;
         return this;
     }
