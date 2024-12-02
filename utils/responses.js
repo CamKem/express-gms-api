@@ -50,6 +50,19 @@ class APIResponse {
 }
 
 /**
+ * API response class for handling API success responses
+ * @extends BaseResponse
+ * @constructor
+ * @param request
+ * @returns Response object
+ */
+class APIResponse extends BaseResponse {
+    constructor(request) {
+        super(request, 'success');
+    }
+}
+
+/**
  * Error response class for handling API error responses
  * @extends APIResponse
  * @constructor
