@@ -21,6 +21,8 @@ We want to provide a more structured way to handle responses in our application 
 ### For successful responses;
 [//]: # (TODO: decide if we want to offer custom response codes for each endpoint or just use the generic "OK" code)
 [//]: # (TODO: also decide if we want to pass a message in the response for successful requests)
+[//]: # (TODO: include dynamic links to the documentation for each endpoint, error & nuanced response code)
+[//]: # (TODO: work out of we want to include the name of the resource in the structure, eg. "user" or "product")
 ```json 
  {
   "status": "success", 
