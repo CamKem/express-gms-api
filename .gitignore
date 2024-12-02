@@ -1,3 +1,7 @@
 node_modules
 .idea
 .env
+
+# Ignore all files and subfolders in the /coverage directory
+coverage/*
+.coverage/*
