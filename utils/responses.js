@@ -1,19 +1,19 @@
 /**
- * Response class for handling API responses
+ * Base Response class for handling API responses
  * @constructor
  * @param request
  * @param type
  * @returns Response object
  */
-class APIResponse {
+class BaseResponse {
 
-    constructor(request, type = 'success') {
+    constructor(request, type) {
         this.request = request;
         this.type = type;
         this.status_code = 200;
         this.response_code = 'OK';
         this.request_id = request.requestId;
-        this.docs_url = `${request.get('host')}/docs/${this.response_code}`;
+        this.docs_url = `${process.env.APP_HOST}/docs/${this.response_code}`;
     }
 
     code(code) {
@@ -67,8 +67,9 @@ class APIResponse extends BaseResponse {
  * @extends APIResponse
  * @constructor
  * @param request
+ * @returns Response object
  */
-class ErrorResponse extends APIResponse {
+class ErrorResponse extends BaseResponse {
     constructor(request) {
         super(request, 'error');
     }
