@@ -65,6 +65,10 @@ class ResponsableError extends Error {
 
 }
 
+/**
+ * Error class for when a request is malformed
+ * @status 400
+ */
 class BadRequestError extends ResponsableError {
     constructor(message = 'The request could not be understood by the server due to malformed syntax.', details) {
         super(message, 400, details);
@@ -72,6 +76,10 @@ class BadRequestError extends ResponsableError {
     }
 }
 
+/**
+ * Error class for when a resource is not found
+ * @status 401
+ */
 class UnauthorizedError extends ResponsableError {
     constructor(message = 'You are not authorized to access this resource.', details) {
         super(message, 401, details);
@@ -79,6 +87,10 @@ class UnauthorizedError extends ResponsableError {
     }
 }
 
+/**
+ * Error class for when a resource is not found
+ * @status 403
+ */
 class ForbiddenError extends ResponsableError {
     constructor(message = 'You do not have permission to access this resource.', details) {
         super(message, 403, details);
@@ -86,6 +98,10 @@ class ForbiddenError extends ResponsableError {
     }
 }
 
+/**
+ * Error class for when a resource is not found
+ * @status 404
+ */
 class NotFoundError extends ResponsableError {
     constructor(message = 'The requested resource was not found.', details) {
         super(message, 404, details);
@@ -93,6 +109,10 @@ class NotFoundError extends ResponsableError {
     }
 }
 
+/**
+ * Error class for when a resource is not found
+ * @status 405
+ */
 class MethodNotAllowedError extends ResponsableError {
     constructor(message = 'The method is not allowed for the requested URL.', details) {
         super(message, 405, details);
@@ -100,6 +120,10 @@ class MethodNotAllowedError extends ResponsableError {
     }
 }
 
+/**
+ * Error class for when a resource is not found
+ * @status 406
+ */
 class NotAcceptableError extends ResponsableError {
     constructor(message = 'The server cannot generate a response that the client will accept.', details) {
         super(message, 406, details);
@@ -107,6 +131,10 @@ class NotAcceptableError extends ResponsableError {
     }
 }
 
+/**
+ * Error class for when a resource is not found
+ * @status 409
+ */
 class ConflictError extends ResponsableError {
     constructor(message = 'The request could not be completed due to a conflict with the current state of the resource.', details) {
         super(message, 409, details);
@@ -114,6 +142,10 @@ class ConflictError extends ResponsableError {
     }
 }
 
+/**
+ * Error class for when a resource is not found
+ * @status 415
+ */
 class UnsupportedMediaTypeError extends ResponsableError {
     constructor(message = 'The server does not support the media type transmitted in the request.', details) {
         super(message, 415, details);
@@ -121,6 +153,10 @@ class UnsupportedMediaTypeError extends ResponsableError {
     }
 }
 
+/**
+ * Error class for when a resource is not found
+ * @status 422
+ */
 class UnprocessableEntityError extends ResponsableError {
     constructor(message = 'The server cannot process the request due to semantic errors.', details) {
         super(message, 422, details);
@@ -128,7 +164,10 @@ class UnprocessableEntityError extends ResponsableError {
     }
 }
 
-
+/**
+ * Error class for when a resource is not found
+ * @status 500
+ */
 class InternalServerError extends ResponsableError {
     constructor(message = 'An internal server error occurred.', details) {
         super(message, 500, details);
