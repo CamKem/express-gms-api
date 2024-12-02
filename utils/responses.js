@@ -40,7 +40,6 @@ class BaseResponse {
         this.request.res.status(this.status_code)
             .json({
                 status: this.type,
-                statusCode: this.status_code,
                 code: this.response_code,
                 data: data,
                 requestId: this.request_id,
