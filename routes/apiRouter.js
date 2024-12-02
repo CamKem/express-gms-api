@@ -38,14 +38,16 @@ apiRouter.use(async (request, response, next) => {
     if (!version || !/^v\d+$/.test(version)) {
         throw new NotFoundError('No API version specified')
             .withDetails('Please specify an an API version and check the documentation')
-            .withCode('VERSION_NOT_SPECIFIED');
+            .withCode('VERSION_NOT_SPECIFIED')
+            .withDocsUrl(`${process.env.APP_URL}/docs/api`);
     }
 
     const folderPath = path.resolve('controllers', `api_v${versionNumber}`);
     if (!(versionNumber <= currentVersionNumber) || !(versionNumber > 0) || !fs.existsSync(folderPath)) {
         throw new UnprocessableEntityError('Invalid API version requested')
             .withDetails(`The current API version is ${currentVersion}`)
-            .withCode('INVALID_API_VERSION');
+            .withCode('INVALID_API_VERSION')
+            .withDocsUrl(`${process.env.APP_URL}/docs/api`);
     }
 
     next();

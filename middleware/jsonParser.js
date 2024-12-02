@@ -1,5 +1,5 @@
 import express from 'express';
-import {NotAcceptableError} from "../utils/errors.js";
+import {BadRequestError, NotAcceptableError} from "../utils/errors.js";
 
 /**
  * Parse the request body as JSON
@@ -23,9 +23,10 @@ const jsonParser = async (req, res, next) => {
     });
 
     if (!validJson) {
-        throw new NotAcceptableError('Request body must contain valid JSON')
+        throw new BadRequestError('Request body must contain valid JSON')
             .withDetails('Please check the request body and try again')
-            .withCode('INVALID_JSON');
+            .withCode('INVALID_JSON')
+            .withDocsUrl(`${process.env.APP_URL}/docs/errors#invalid-json`);
     }
 
     next();
