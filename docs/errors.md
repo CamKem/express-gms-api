@@ -17,7 +17,8 @@
 - INVALID_API_VERSION: The provided API version was invalid. (422)
 - RESOURCE_NOT_FOUND: The requested resource was not found. (404)
 
-
+[//]: # (TODO: list all of the custom error codes here)
+[//]: # (TODO: we will set up automatic docs linking &#40;HATEOAS&#41; for each endpoint and error code)
 
 # Possible Future Additions (4xx)
 ### 401 Unauthorized
