@@ -1,11 +1,4 @@
-'use strict'
-
-// Dependencies
 import express from 'express';
-import Model from '../../models/Example.js';
-
-console.log('Model:', Model);
-
 // Create Router to handle this specific route (/api/v1/examples)
 const examples = express.Router();
 
