@@ -2,8 +2,7 @@ import { rateLimit } from 'express-rate-limit'
 
 /**
  * Rate limiter middleware
- * Limits the number of requests from a single IP address
- * JSDoc definition for rateLimit
+ *
  * @param {Object} options - Rate limit options
  * @type {Function}
  * @returns {Function}
