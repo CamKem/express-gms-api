@@ -1,6 +1,8 @@
-# Errors to document based on the error codes in the codebase
+# Errors
 
-# Standard Error Responses (4xx and 5xx)
+Need to be to document based on the error codes in the codebase
+
+### Standard Error Responses (4xx and 5xx)
 - BAD_REQUEST: The request was malformed. (400)
 - UNAUTHORIZED: The request was unauthorized. (401)
 - FORBIDDEN: The request was forbidden. (403)
@@ -12,21 +14,63 @@
 - UNPROCESSABLE_ENTITY: The request was unprocessable. (422)
 - INTERNAL_SERVER_ERROR: An internal server error occurred. (500)
 
-# Nuanced Error Responses (4xx)
+### Nuanced Custom Error Responses (4xx)
 - VERSION_NOT_SPECIFIED: The API version was not specified. (404)
 - INVALID_API_VERSION: The provided API version was invalid. (422)
+- INVALID_ACCEPT_HEADER: The provided accept header was invalid. (406)
 - RESOURCE_NOT_FOUND: The requested resource was not found. (404)
+- INVALID_JSON: The provided JSON was invalid. (400)
+
+-------------------------------------
 
 [//]: # (TODO: list all of the custom error codes here)
 [//]: # (TODO: we will set up automatic docs linking &#40;HATEOAS&#41; for each endpoint and error code)
 
-# Possible Future Additions (4xx)
+# Possible Future Additions
+
+### Nuanced Success Responses (2xx)
+- SUCCESS: The request was successful. (200)
+- CREATED: The request was successful and a new resource was created. (201)
+- NO_CONTENT: The request was successful and no content was returned. (204)
+- RESET_CONTENT: The request was successful and the content was reset. (205)
+- PARTIAL_CONTENT: The request was successful and only partial content was returned. (206)
+- MULTI_STATUS: The request was successful and multiple statuses were returned. (207)
+- ALREADY_REPORTED: The request was successful and the resource was already reported. (208)
+- IM_USED: The request was successful, and the resource was used. (226)
+- MULTIPLE_CHOICES: The request was successful, and multiple choices were returned. (300)
+- MOVED_PERMANENTLY: The request was successful, and the resource was moved permanently. (301)
+- FOUND: The request was successful, and the resource was found. (302)
+- SEE_OTHER: The request was successful, and the resource was seen elsewhere. (303)
+- NOT_MODIFIED: The request was successful, and the resource was not modified. (304)
+- USE_PROXY: The request was successful, and the resource was used as a proxy. (305)
+- TEMPORARY_REDIRECT: The request was successful, and the resource was temporarily redirected. (307)
+- PERMANENT_REDIRECT: The request was successful, and the resource was permanently redirected. (308)
+
+### Nuanced Error Responses (5xx)
+- BAD_GATEWAY: The request was successful, and the gateway was bad. (502)
+- SERVICE_UNAVAILABLE: The request was successful, and the service was unavailable. (503)
+- GATEWAY_TIMEOUT: The request was successful, and the gateway timed out. (504)
+- HTTP_VERSION_NOT_SUPPORTED: The request was successful, and the HTTP version was not supported. (505)
+- VARIANT_ALSO_NEGOTIATES: The request was successful, and the variant also negotiates. (506)
+- INSUFFICIENT_STORAGE: The request was successful, and the storage was insufficient. (507)
+- LOOP_DETECTED: The request was successful, and a loop was detected. (508)
+- BANDWIDTH_LIMIT_EXCEEDED: The request was successful, and the bandwidth limit was exceeded. (509)
+- NOT_EXTENDED: The request was successful, and the resource was not extended. (510)
+- NETWORK_AUTHENTICATION_REQUIRED: The request was successful, and network authentication was required. (511)
+- NETWORK_READ_TIMEOUT_ERROR: The request was successful, and the network read timed out. (598)
+- NETWORK_CONNECT_TIMEOUT_ERROR: The request was successful, and the network connect timed out. (599)
+- NETWORK_CONNECTION_REFUSED: The request was successful, and the network connection was refused. (599)
+- NETWORK_CONNECTION_RESET: The request was successful, and the network connection was reset. (599)
+- NETWORK_CONNECTION_ABORTED: The request was successful, and the network connection was aborted. (599)
+- NETWORK_CONNECTION_FAILED: The request was successful, and the network connection failed. (599)
+
 ### 401 Unauthorized
 - INVALID_CREDENTIALS: The provided credentials were invalid. (401)
 - INVALID_TOKEN: The provided token was invalid. (401)
 - EXPIRED_TOKEN: The provided token was expired. (401)
 - MISSING_TOKEN: The token was missing from the request. (401)
 - INVALID_SIGNATURE: The provided signature was invalid. (401)
+
 ### 403 Forbidden
 - INVALID_SCOPE: The provided scope was invalid. (403)
 - INVALID_ORIGIN: The provided origin was invalid. (403)
@@ -46,6 +90,7 @@
 - INVALID_VERIFICATION_SUBJECT: The provided verification subject was invalid. (403)
 - INVALID_VERIFICATION_CONTENT: The provided verification content was invalid. (403)
 - INVALID_VERIFICATION_METHODS: The provided verification methods were invalid. (403)
+
 ### 404 Not Found
 - NOT_FOUND_USER: The requested user was not found. (404)
 - NOT_FOUND_SESSION: The requested session was not found. (404)
