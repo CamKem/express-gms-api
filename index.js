@@ -30,7 +30,7 @@ app.use(cors({
 
 // Mongoose Connection Error Handler
 mongoose.connection.on("error", (err) => {
-    console.error("DB error: " + err);
+    throw new Error("DB error: " + err);
 });
 
 // DB Connection & Server Start
@@ -54,6 +54,6 @@ mongoose.connect(process.env.DB_CONNECTION_STRING)
         }
     })
     .catch(err => {
-        logger('error', 'DB Connection', err);
+        throw new Error("DB connection error: " + err);
         process.exit(1);
     });
