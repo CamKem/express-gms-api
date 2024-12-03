@@ -34,8 +34,7 @@ products.get('/', async (req, res, next) => {
  * @desc    Get a product by SKU
  * @access  Public
  */
-const skuPattern = '\\(\\[A-Z\\]{2}-\\d{4}-\\d{2}\\)';
-products.get(`/:sku${skuPattern}`, async (req, res, next) => {
+products.get(skuRegex, async (req, res, next) => {
     const {sku} = req.params;
     const product = await Product.findOne({sku});
     if (!product) {
