@@ -20,7 +20,7 @@ const products = express.Router();
 // Global controller values
 const currentVersion = process.env.API_VERSION;
 const skuRegex = /\/(?<sku>[A-Z]{2}-\d{4}-\d{2})/;
-const docsUrl = `${process.env.APP_URL}/docs/api/${currentVersion}/products`;
+const docsUrl = `/docs/api/${currentVersion}/products`;
 
 /**
  * @route   GET /products
@@ -84,7 +84,7 @@ products.post('/', async (req, res, next) => {
                 .withStatusCode(201)
                 .withCode('RESOURCE_CREATED')
                 .withDocsUrl(endpointDocsUrl)
-                .withLocation(`${process.env.APP_URL}${req.baseUrl}/${product.sku}`)
+                .withLocation(`${req.baseUrl}/${product.sku}`)
                 .send({
                     message: 'The product has been successfully created.',
                     product: product

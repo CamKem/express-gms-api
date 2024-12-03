@@ -34,7 +34,7 @@ const currentVersion = setValue(`v${currentVersionNumber}`, 'v1');
 apiRouter.use(async (request, response, next) => {
     const version = setValue(request.url.split('/')[1], null);
     const versionNumber = setValue(parseInt(version.replace('v', ''), 10), 0);
-    const endpointDocsUrl = `${process.env.APP_URL}/docs/api/${currentVersion}/`;
+    const endpointDocsUrl = `/docs/api/${currentVersion}/`;
 
     if (!version || !/^v\d+$/.test(version)) {
         throw new NotFoundError('No API version specified')

@@ -13,7 +13,7 @@ class BaseResponse {
         this.status_code = 200;
         this.response_code = 'OK';
         this.request_id = request.requestId;
-        this.docs_url = `${process.env.APP_HOST}/docs/search/${this.response_code}`;
+        this.docs_url = `/docs/api/${process.env.API_VERSION}/search/${this.response_code}`;
     }
 
     withCode(code) {

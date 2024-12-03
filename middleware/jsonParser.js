@@ -26,7 +26,7 @@ const jsonParser = async (req, res, next) => {
         throw new BadRequestError('Request body must contain valid JSON')
             .withDetails('Please check the request body and try again')
             .withCode('INVALID_JSON')
-            .withDocsUrl(`${process.env.APP_URL}/docs/errors#invalid-json`);
+            .withDocsUrl(`/docs/api/${process.env.API_VERSION}/errors#invalid-json`);
     }
 
     next();
