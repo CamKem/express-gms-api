@@ -62,20 +62,17 @@ for (const [version, resources] of Object.entries(routeMap)) {
         resourceRouter.use(jsonParser);
 
         resourceRouter.use(async (req, res, next) => {
-            try {
-                const controllerPath = path.resolve('controllers', `api_${version}`, `${resource}.js`);
+            const controllerPath = path.resolve('controllers', `api_${version}`, `${resource}.js`);
 
-                const controllerModule = await import(controllerPath);
-                const controller = controllerModule.default;
+            const controllerModule = await import(controllerPath);
+            const controller = controllerModule.default;
 
-                if (typeof controller !== 'function' || !(controller instanceof express.Router)) {
-                    throw new Error('Invalid controller configuration');
-                }
-
-                return controller(req, res, next);
-            } catch (err) {
-                next(err);
+            if (typeof controller !== 'function' || !(controller instanceof express.Router)) {
+                const error = new Error('Invalid controller configuration');
+                return next(error);
             }
+
+            return controller(req, res, next);
         });
 
         apiRouter.use(routePath, resourceRouter);
