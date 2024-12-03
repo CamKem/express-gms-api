@@ -43,6 +43,7 @@ class BaseResponse {
                 code: this.response_code,
                 data: data,
                 path: this.request.baseUrl + this.request.path,
+                method: this.request.method,
                 requestId: this.request_id,
                 docs: this.docs_url
             });
