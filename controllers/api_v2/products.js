@@ -23,10 +23,10 @@ const docsUrl = `${process.env.APP_URL}/docs/api/${currentVersion}/products`;
  */
 products.get('/', async (req, res, next) => {
     const products = await Product.find({});
-    res.json({
-        statusCode: 200,
-        data: products,
-    });
+
+    new APIResponse(req)
+        .withDocsUrl(docsUrl)
+        .send(products);
 });
 
 /**
