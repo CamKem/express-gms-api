@@ -27,6 +27,8 @@ Need to be to document based on the error codes in the codebase
 - RESOURCE_NOT_UPDATED: The resource was not updated. (500) [//]: # (we will use a 500 because it is a general server error)
 - RESOURCE_REPLACED: The resource was replaced successfully. (200)
 - RESOURCE_NOT_REPLACED: The resource was not replaced. (500) [//]: # (we will use a 500 because it is a general server error)
+- RESOURCE_DELETED: The resource was deleted successfully. (200)
+- RESOURCE_NOT_DELETED: The resource was not deleted. (500) [//]: # (we will use a 500 because it is a general server error)
 - INVALID_JSON: The provided JSON was invalid. (400)
 - INVALID_FIELDS: The provided fields were invalid. (422)
 - VALIDATION_ERROR: The provided data was invalid. (422)
