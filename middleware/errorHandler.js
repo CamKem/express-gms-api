@@ -25,11 +25,10 @@ export default function errorHandler(err, req, res, next) {
         .withStatusCode(setValue(err.statusCode, 500))
         .withCode(setValue(err.code, 'INTERNAL_SERVER_ERROR'))
         .withRequestId(req.requestId)
-        .withDocsUrl(setValue(err.documentation_url, `${process.env.APP_URL}/docs/errors#${err.code}`))
+        .withDocsUrl(setValue(err.docs_url, `${process.env.APP_URL}/docs/errors#${err.code}`))
         .send({
             message: setValue(err.message, 'An error occurred while processing your request'),
             details: setValue(err.details, ''),
             timestamp: setValue(err.timestamp, new Date().toISOString()),
-            path: setValue(err.path, req.originalUrl)
         });
 }

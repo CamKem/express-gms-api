@@ -7,9 +7,8 @@ class ResponsableError extends Error {
         this.code = this.constructor.name;
         this.statusCode = statusCode;
         this.timestamp = new Date().toISOString();
-        this.path = undefined;
         this.details = details;
-        this.documentation_url = undefined;
+        this.docs_url = undefined;
     }
 
     /**
@@ -21,30 +20,6 @@ class ResponsableError extends Error {
      */
     withCode(code) {
         this.code = code;
-        return this;
-    }
-
-    /**
-     * Set the timestamp of the error
-     *
-     * @example '2021-06-30T13:00:00.000Z'
-     * @param timestamp
-     * @returns {ResponsableError}
-     */
-    withTimestamp(timestamp) {
-        this.timestamp = timestamp;
-        return this;
-    }
-
-    /**
-     * Set the path of the request that caused the error
-     *
-     * @example '/products/123'
-     * @param path
-     * @returns {ResponsableError}
-     */
-    withPath(path) {
-        this.path = path;
         return this;
     }
 
@@ -61,14 +36,14 @@ class ResponsableError extends Error {
     }
 
     /**
-     * Set the documentation URL to provide more information about the error.
+     * Set the docs URL to provide more information about the error.
      *
      * @example 'https://example.com/docs/errors/USER_NOT_FOUND'
-     * @param documentation_url
+     * @param docs_url
      * @returns {ResponsableError}
      */
-    withDocsUrl(documentation_url) {
-        this.documentation_url = documentation_url;
+    withDocsUrl(docs_url) {
+        this.docs_url = docs_url;
         return this;
     }
 
