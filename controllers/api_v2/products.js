@@ -164,32 +164,63 @@ products.put(skuRegex, async (req, res, next) => {
  * @desc    Update a product by SKU
  * @access  Public
  */
-products.patch('/:sku', async (req, res, next) => {
+products.patch(skuRegex, async (req, res, next) => {
     const {sku} = req.params;
     const updateFields = {...req.body} || {};
+    const endpointDocsUrl = `${docsUrl}#update-a-product`;
 
     if (Object.keys(updateFields).length === 0) {
         return new BadRequestError('No fields provided for update.');
     }
 
-    // Prevent SKU from being updated
     if (updateFields.sku && updateFields.sku !== sku) {
-        return next(new BadRequestError('Cannot update SKU.'));
+        throw new BadRequestError('SKU cannot be updated.')
+            .withCode('UPDATE_NOT_ALLOWED')
+            .withDetails('Please remove the SKU field and try again.')
+            .withDocsUrl(endpointDocsUrl);
     }
-    delete updateFields.sku; // Remove SKU from updateFields if present
+    delete updateFields.sku;
 
-    const product = await Product.findOneAndUpdate({sku}, updateFields, {
+    await Product.findOneAndUpdate({sku}, updateFields, {
         new: true,
-    });
-
-    if (!product) {
-        return next(new NotFoundError(`Product with SKU ${sku} not found.`));
-    }
-
-    res.json({
-        statusCode: 200,
-        data: product,
-    });
+        strict: true,
+        upsert: false,
+        runValidators: true,
+        includeResultMetadata: true,
+    }).exec()
+        .then((result) => {
+            console.log(result);
+            if (result.lastErrorObject.updatedExisting === false) {
+                throw new NotFoundError(`Product with SKU ${sku} not found.`)
+                    .withCode('PRODUCT_NOT_FOUND')
+                    .withDetails('Please check the SKU and try again.')
+                    .withDocsUrl(endpointDocsUrl);
+            } else if (result.value === null) {
+                throw new InternalServerError('Product could not be updated.')
+                    .withCode('RESOURCE_NOT_UPDATED')
+                    .withDetails('Please try again.')
+                    .withDocsUrl(endpointDocsUrl)
+            } else {
+                return new APIResponse(req)
+                    .withStatusCode(200)
+                    .withCode('RESOURCE_UPDATED')
+                    .withDocsUrl(endpointDocsUrl)
+                    .send(result.value);
+            }
+        })
+        .catch(function (err) {
+            if (err.name === 'ValidationError') {
+                throw new UnprocessableEntityError(setValue(
+                            err._message,
+                            'Product could not be updated, due to validation errors.'
+                        ))
+                    .withCode('VALIDATION_ERROR')
+                    .withDetails(mapValidationErrors(err.errors))
+                    .withDocsUrl(endpointDocsUrl);
+            }
+            return next(err);
+        })
+        .catch(next);
 });
 
 /**
