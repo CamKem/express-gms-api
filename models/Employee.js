@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import bcrypt from "bcrypt";
 
 // Define the User schema
 const EmployeeSchema = new mongoose.Schema({
@@ -59,6 +60,24 @@ const EmployeeSchema = new mongoose.Schema({
         }
     }
 });
+
+EmployeeSchema.pre('save', async function (next) {
+    if (!this.isModified('password')) return next();
+
+    const salt = await bcrypt.genSalt(10)
+    this.password = await bcrypt.hash(this.password, salt)
+        .catch(err => next(err));
+});
+
+EmployeeSchema.methods.setEmpId = async function (next) {
+    const lastEmployee = await this.constructor.findOne({}, {}, {sort: {empId: -1}})
+            .catch(err => next(err));
+    return this.empId = lastEmployee ? lastEmployee.empId + 1 : 100;
+}
+
+EmployeeSchema.methods.matchPassword = async function (enteredPassword) {
+    return await bcrypt.compare(enteredPassword, this.password);
+}
 
 const Employee = mongoose.model('Employee', EmployeeSchema);
 
