@@ -32,11 +32,11 @@ const ProductSchema = new mongoose.Schema(
             min: [0, 'Stock must be a positive number'],
         },
     }, {
+        versionKey: false,
         timestamps: true,
         toJSON: {
             transform: (doc, ret) => {
                 delete ret._id;
-                delete ret.__v;
                 return ret;
             }
         }
