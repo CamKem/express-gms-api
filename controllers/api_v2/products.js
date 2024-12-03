@@ -84,6 +84,7 @@ products.post('/', async (req, res, next) => {
                 .withStatusCode(201)
                 .withCode('RESOURCE_CREATED')
                 .withDocsUrl(endpointDocsUrl)
+                .withLocation(`${process.env.APP_URL}${req.baseUrl}/${product.sku}`)
                 .send({
                     message: 'The product has been successfully created.',
                     product: product
