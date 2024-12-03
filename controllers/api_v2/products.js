@@ -1,6 +1,12 @@
 import express from 'express';
 import Product from '../../models/Product.js';
-import {BadRequestError, ConflictError, NotFoundError, UnprocessableEntityError} from '../../utils/errors.js';
+import {
+    BadRequestError,
+    ConflictError,
+    InternalServerError,
+    NotFoundError,
+    UnprocessableEntityError
+} from '../../utils/errors.js';
 import {APIResponse} from "../../utils/responses.js";
 import {setValue} from "../../utils/setValue.js";
 import mapValidationErrors from "../../utils/mapValidationErrors.js";
@@ -37,13 +43,19 @@ products.get('/', async (req, res, next) => {
 products.get(skuRegex, async (req, res, next) => {
     const {sku} = req.params;
     const product = await Product.findOne({sku});
+
+    const endpointDocsUrl = `${docsUrl}#retrieve-a-product`;
+
     if (!product) {
-        throw new NotFoundError(`Product with SKU ${sku} not found.`);
+        throw new NotFoundError(`Product with SKU ${sku} not found.`)
+            .withCode('RESOURCE_NOT_FOUND')
+            .withDetails('Please check the SKU and try again.')
+            .withDocsUrl(endpointDocsUrl);
     }
 
     new APIResponse(req)
-        .withDocsUrl(`${docsUrl}#retrieve-a-product`)
-        .withCode('PRODUCT_RETRIEVED')
+        .withCode('RESOURCE_RETRIEVED')
+        .withDocsUrl(endpointDocsUrl)
         .send(product);
 });
 
