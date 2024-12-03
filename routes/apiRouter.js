@@ -34,12 +34,13 @@ const currentVersion = setValue(`v${currentVersionNumber}`, 'v1');
 apiRouter.use(async (request, response, next) => {
     const version = setValue(request.url.split('/')[1], null);
     const versionNumber = setValue(parseInt(version.replace('v', ''), 10), 0);
+    const endpointDocsUrl = `${process.env.APP_URL}/docs/api/${currentVersion}/`;
 
     if (!version || !/^v\d+$/.test(version)) {
         throw new NotFoundError('No API version specified')
             .withDetails('Please specify an an API version and check the documentation')
             .withCode('VERSION_NOT_SPECIFIED')
-            .withDocsUrl(`${process.env.APP_URL}/docs/api`);
+            .withDocsUrl(endpointDocsUrl);
     }
 
     const folderPath = path.resolve('controllers', `api_v${versionNumber}`);
@@ -47,7 +48,7 @@ apiRouter.use(async (request, response, next) => {
         throw new UnprocessableEntityError('Invalid API version requested')
             .withDetails(`The current API version is ${currentVersion}`)
             .withCode('INVALID_API_VERSION')
-            .withDocsUrl(`${process.env.APP_URL}/docs/api`);
+            .withDocsUrl(endpointDocsUrl);
     }
 
     next();

@@ -14,6 +14,7 @@ const contentNegotiator = (req, res, next) => {
     if (!req.accepts('application/json')) {
         throw new NotAcceptableError('Accept header must allow application/json')
             .withDetails(`Received Accept header: ${req.get('Accept')}`)
+            .withDocsUrl('https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept')
             .withCode('INVALID_ACCEPT_HEADER');
     }
 
@@ -21,6 +22,7 @@ const contentNegotiator = (req, res, next) => {
         if (!req.get('Content-Type') || !req.is('application/json')) {
             throw new UnsupportedMediaTypeError('Content-Type must be application/json')
                 .withDetails(`Received Content-Type: ${req.get('Content-Type')}`)
+                .withDocsUrl('https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type')
         }
     }
     return next();
