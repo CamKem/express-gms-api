@@ -11,19 +11,18 @@ import {NotAcceptableError, UnsupportedMediaTypeError} from "../utils/errors.js"
  *  @throws {NotAcceptableError} - If accept header does not allow application/json
  */
 const contentNegotiator = (req, res, next) => {
-    if (['POST', 'PUT', 'PATCH'].includes(req.method)) {
-        if (!req.get('Content-Type') || !req.is('application/json')) {
-            throw new UnsupportedMediaTypeError('Content-Type must be application/json')
-                .withDetails(`Received Content-Type: ${req.get('Content-Type')}`)
-        }
-    }
-
     if (!req.accepts('application/json')) {
         throw new NotAcceptableError('Accept header must allow application/json')
             .withDetails(`Received Accept header: ${req.get('Accept')}`)
             .withCode('INVALID_ACCEPT_HEADER');
     }
 
+    if (['POST', 'PUT', 'PATCH'].includes(req.method)) {
+        if (!req.get('Content-Type') || !req.is('application/json')) {
+            throw new UnsupportedMediaTypeError('Content-Type must be application/json')
+                .withDetails(`Received Content-Type: ${req.get('Content-Type')}`)
+        }
+    }
     return next();
 };
 
