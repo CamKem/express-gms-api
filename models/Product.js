@@ -9,7 +9,7 @@ const ProductSchema = new mongoose.Schema(
             unique: true,
             match: [
                 /^[A-Z]{2}-\d{4}-\d{2}$/,
-                'SKU should be in the format of XX-1234-56'
+                'SKU should be a string in the format of XX-1234-56'
             ],
         },
         name: {
@@ -18,7 +18,7 @@ const ProductSchema = new mongoose.Schema(
             trim: true,
             match: [
                 /^[a-zA-Z ]+$/,
-                'Name should contain only letters and spaces'
+                'Name should be a string with only letters and spaces'
             ],
         },
         price: {
