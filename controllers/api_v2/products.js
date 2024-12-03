@@ -142,7 +142,10 @@ products.put(skuRegex, async (req, res, next) => {
                     .withStatusCode(200)
                     .withCode('RESOURCE_REPLACED')
                     .withDocsUrl(routeDocsUrl)
-                    .send(result.value);
+                    .send({
+                        message: 'The product has been successfully replaced.',
+                        product: result.value
+                    });
             }
         })
         .catch(function (err) {
@@ -205,7 +208,10 @@ products.patch(skuRegex, async (req, res, next) => {
                     .withStatusCode(200)
                     .withCode('RESOURCE_UPDATED')
                     .withDocsUrl(endpointDocsUrl)
-                    .send(result.value);
+                    .send({
+                        message: 'The product has been successfully updated.',
+                        product: result.value
+                    });
             }
         })
         .catch(function (err) {
