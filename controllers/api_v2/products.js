@@ -28,9 +28,20 @@ const docsUrl = `/docs/api/${currentVersion}/products`;
  * @access  Public
  */
 products.get('/', async (req, res, next) => {
-    const products = await Product.find({});
+    const products = await Product.find({}, {__v: 0, _id: 0})
+        .exec()
+        .then(products => products)
+        .catch(err => {
+            if (err) {
+                throw new InternalServerError('Products could not be retrieved.')
+                    .withCode('RESOURCE_NOT_RETRIEVED')
+                    .withDetails('Please try again.')
+                    .withDocsUrl(docsUrl);
+            }
+        });
 
     new APIResponse(req)
+        .withCode('RESOURCE_RETRIEVED')
         .withDocsUrl(docsUrl)
         .send(products);
 });
@@ -42,7 +53,7 @@ products.get('/', async (req, res, next) => {
  */
 products.get(skuRegex, async (req, res, next) => {
     const {sku} = req.params;
-    const product = await Product.findOne({sku});
+    const product = await Product.findOne({sku}, {__v: 0, _id: 0});
 
     const endpointDocsUrl = `${docsUrl}#retrieve-a-product`;
 
@@ -152,9 +163,9 @@ products.put(skuRegex, async (req, res, next) => {
         .catch(function (err) {
             if (err.name === 'ValidationError') {
                 throw new UnprocessableEntityError(setValue(
-                            err._message,
-                            'Product could not be replaced, due to validation errors.'
-                        ))
+                    err._message,
+                    'Product could not be replaced, due to validation errors.'
+                ))
                     .withCode('VALIDATION_ERROR')
                     .withDetails(mapValidationErrors(err.errors))
                     .withDocsUrl(routeDocsUrl);
@@ -221,9 +232,9 @@ products.patch(skuRegex, async (req, res, next) => {
         .catch(function (err) {
             if (err.name === 'ValidationError') {
                 throw new UnprocessableEntityError(setValue(
-                            err._message,
-                            'Product could not be updated, due to validation errors.'
-                        ))
+                    err._message,
+                    'Product could not be updated, due to validation errors.'
+                ))
                     .withCode('VALIDATION_ERROR')
                     .withDetails(mapValidationErrors(err.errors))
                     .withDocsUrl(endpointDocsUrl);
@@ -244,7 +255,7 @@ products.delete(skuRegex, async (req, res, next) => {
 
     await Product.findOneAndDelete({sku}, {includeResultMetadata: true})
         .exec()
-        .then((result, ) => {
+        .then((result,) => {
             console.log(result);
             if (result.lastErrorObject.n === 0 && result.ok === 1 && result.value === null) {
                 throw new NotFoundError(`Product with SKU ${sku} not found.`)
