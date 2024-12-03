@@ -36,6 +36,11 @@ class BaseResponse {
         return this;
     }
 
+    withHeader(key, value) {
+        this.request.res.setHeader(key, value);
+        return this;
+    }
+
     send(data) {
         return this.request.res.status(this.status_code)
             .json({
@@ -87,9 +92,8 @@ class ErrorResponse extends BaseResponse {
 // Uncaught ReferenceError: Cannot access 'Response' before initialization/
     // To fix this, we need to rename the Response class in the responses.js file to something else.
 
-class StdResponse extends Response {
+class Response {
     constructor(request) {
-        super();
         this.request = request;
         this.status_code = 200;
         this.type = 'text/html';
@@ -108,4 +112,4 @@ class StdResponse extends Response {
     }
 }
 
-export { APIResponse, ErrorResponse, StdResponse };
+export { APIResponse, ErrorResponse, Response };
