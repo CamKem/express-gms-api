@@ -1,5 +1,5 @@
 import express from 'express';
-import {BadRequestError, NotAcceptableError} from "../utils/errors.js";
+import {BadRequestError} from "../utils/errors.js";
 
 /**
  * Parse the request body as JSON
@@ -8,7 +8,7 @@ import {BadRequestError, NotAcceptableError} from "../utils/errors.js";
  * @param res
  * @param next
  * @type {function(*=, *=, *): Promise<void>}
- * @throws {NotAcceptableError} if the request body is not valid JSON
+ * @throws {BadRequestError} if the request body is not valid JSON
  * @returns {Promise<void>}
  */
 const jsonParser = async (req, res, next) => {
