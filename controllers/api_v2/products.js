@@ -1,10 +1,20 @@
-// controllers/api_v1/products.js
-
 import express from 'express';
 import Product from '../../models/Product.js';
-import {BadRequestError, NotFoundError} from '../../utils/errors.js';
+import {BadRequestError, ConflictError, NotFoundError, UnprocessableEntityError} from '../../utils/errors.js';
+import {APIResponse} from "../../utils/responses.js";
+import {setValue} from "../../utils/setValue.js";
+import mapValidationErrors from "../../utils/mapValidationErrors.js";
 
+/**
+ * Product controller
+ * @type {Router}
+ */
 const products = express.Router();
+
+// Global controller values
+const currentVersion = process.env.API_VERSION;
+const skuRegex = /\/(?<sku>[A-Z]{2}-\d{4}-\d{2})/;
+const docsUrl = `${process.env.APP_URL}/docs/api/${currentVersion}/products`;
 
 /**
  * @route   GET /products
