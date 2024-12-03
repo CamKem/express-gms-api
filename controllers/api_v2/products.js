@@ -234,19 +234,36 @@ products.patch(skuRegex, async (req, res, next) => {
  * @desc    Remove a product by SKU
  * @access  Public
  */
-products.delete('/:sku', async (req, res, next) => {
-    try {
-        const {sku} = req.params;
-        const product = await Product.findOneAndDelete({sku});
+products.delete(skuRegex, async (req, res, next) => {
+    const {sku} = req.params;
+    const endpointDocsUrl = `${docsUrl}#remove-a-product`;
 
-        if (!product) {
-            return next(new NotFoundError(`Product with SKU ${sku} not found.`));
-        }
-
-        res.status(204).send(); // No Content
-    } catch (error) {
-        next(error);
-    }
+    await Product.findOneAndDelete({sku}, {includeResultMetadata: true})
+        .exec()
+        .then((result, ) => {
+            console.log(result);
+            if (result.lastErrorObject.n === 0 && result.ok === 1 && result.value === null) {
+                throw new NotFoundError(`Product with SKU ${sku} not found.`)
+                    .withCode('RESOURCE_NOT_FOUND')
+                    .withDetails('Please check the SKU and try again.')
+                    .withDocsUrl(endpointDocsUrl);
+            } else if (result.ok === 1 && result.value !== null) {
+                return new APIResponse(req)
+                    .withStatusCode(200)
+                    .withCode('RESOURCE_DELETED')
+                    .withDocsUrl(endpointDocsUrl)
+                    .send({
+                        message: 'The product has been successfully deleted.',
+                        product: result.value
+                    });
+            } else {
+                throw new InternalServerError('Product could not be deleted.')
+                    .withCode('RESOURCE_NOT_DELETED')
+                    .withDetails('Please try again.')
+                    .withDocsUrl(endpointDocsUrl);
+            }
+        })
+        .catch(next);
 });
 
 export default products;
