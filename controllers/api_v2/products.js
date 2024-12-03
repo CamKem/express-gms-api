@@ -41,10 +41,11 @@ products.get(`/:sku${skuPattern}`, async (req, res, next) => {
     if (!product) {
         throw new NotFoundError(`Product with SKU ${sku} not found.`);
     }
-    res.json({
-        statusCode: 200,
-        data: product,
-    });
+
+    new APIResponse(req)
+        .withDocsUrl(`${docsUrl}#retrieve-a-product`)
+        .withCode('PRODUCT_RETRIEVED')
+        .send(product);
 });
 
 /**
