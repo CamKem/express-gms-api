@@ -42,8 +42,9 @@ class BaseResponse {
                 status: this.type,
                 code: this.response_code,
                 data: data,
+                path: this.request.baseUrl + this.request.path,
                 requestId: this.request_id,
-                docsUrl: this.docs_url
+                docs: this.docs_url
             });
     }
 }
