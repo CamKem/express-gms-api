@@ -13,7 +13,7 @@ class BaseResponse {
         this.status_code = 200;
         this.response_code = 'OK';
         this.request_id = request.requestId;
-        this.docs_url = `${process.env.APP_HOST}/docs/${this.response_code}`;
+        this.docs_url = `${process.env.APP_HOST}/docs/search/${this.response_code}`;
     }
 
     withCode(code) {
@@ -36,8 +36,15 @@ class BaseResponse {
         return this;
     }
 
-    withHeader(key, value) {
-        this.request.res.setHeader(key, value);
+    withLocation(location) {
+        this.request.res.location(location);
+        return this;
+    }
+
+    withHeaders(array) {
+        array.forEach(([key, value]) => {
+            this.request.res.setHeader(key, value);
+        });
         return this;
     }
 
