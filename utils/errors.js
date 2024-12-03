@@ -14,7 +14,8 @@ class ResponsableError extends Error {
 
     /**
      * Set the code of the error so that it can be referenced
-     * E.g. 'USER_NOT_FOUND' for a resource where a user was not found
+     *
+     * @example 'USER_NOT_FOUND' for a resource where a user was not found
      * @param code
      * @returns {ResponsableError}
      */
@@ -25,6 +26,8 @@ class ResponsableError extends Error {
 
     /**
      * Set the timestamp of the error
+     *
+     * @example '2021-06-30T13:00:00.000Z'
      * @param timestamp
      * @returns {ResponsableError}
      */
@@ -35,6 +38,8 @@ class ResponsableError extends Error {
 
     /**
      * Set the path of the request that caused the error
+     *
+     * @example '/products/123'
      * @param path
      * @returns {ResponsableError}
      */
@@ -45,6 +50,8 @@ class ResponsableError extends Error {
 
     /**
      * Set the details to provide more information about the error
+     *
+     * @example 'The user with ID 123 was not found'
      * @param details
      * @returns {ResponsableError}
      */
@@ -54,7 +61,9 @@ class ResponsableError extends Error {
     }
 
     /**
-     * Set the documentation URL to provide more information about the error
+     * Set the documentation URL to provide more information about the error.
+     *
+     * @example 'https://example.com/docs/errors/USER_NOT_FOUND'
      * @param documentation_url
      * @returns {ResponsableError}
      */
@@ -66,7 +75,9 @@ class ResponsableError extends Error {
 }
 
 /**
- * Error class for when a request is malformed
+ * Error class for when the request is malformed.
+ *
+ * @reason Usually related to the syntax of the request.
  * @status 400
  */
 class BadRequestError extends ResponsableError {
@@ -77,7 +88,9 @@ class BadRequestError extends ResponsableError {
 }
 
 /**
- * Error class for when a resource is not found
+ * Error class for unauthorized access to a resource.
+ *
+ * @reason Usually related to the authentication of the user making the request.
  * @status 401
  */
 class UnauthorizedError extends ResponsableError {
@@ -88,7 +101,9 @@ class UnauthorizedError extends ResponsableError {
 }
 
 /**
- * Error class for when a resource is not found
+ * Error class for when a resource is forbidden.
+ *
+ * @reason Usually related to the permissions of the user making the request.
  * @status 403
  */
 class ForbiddenError extends ResponsableError {
@@ -99,7 +114,9 @@ class ForbiddenError extends ResponsableError {
 }
 
 /**
- * Error class for when a resource is not found
+ * Error class for when a resource is not found.
+ *
+ * @reason Usually related to the URL used in the request.
  * @status 404
  */
 class NotFoundError extends ResponsableError {
@@ -110,7 +127,9 @@ class NotFoundError extends ResponsableError {
 }
 
 /**
- * Error class for when a resource is not found
+ * Error class for when a method is not allowed for a resource
+ *
+ * @reason Usually related to the HTTP method used in the request.
  * @status 405
  */
 class MethodNotAllowedError extends ResponsableError {
@@ -121,7 +140,9 @@ class MethodNotAllowedError extends ResponsableError {
 }
 
 /**
- * Error class for when a resource is not found
+ * Error class for a resource that is not acceptable
+ *
+ * @reason Usually related to the Accept header in the request.
  * @status 406
  */
 class NotAcceptableError extends ResponsableError {
@@ -132,7 +153,8 @@ class NotAcceptableError extends ResponsableError {
 }
 
 /**
- * Error class for when a resource is not found
+ * Error class for when there is a conflict with the current state of the resource
+ * @reason Usually due to a resource being modified by another request.
  * @status 409
  */
 class ConflictError extends ResponsableError {
@@ -143,7 +165,8 @@ class ConflictError extends ResponsableError {
 }
 
 /**
- * Error class for when a resource is not found
+ * Error class for Unsupported Media Type.
+ * @reason Usually due to the server not supporting the media type transmitted in the request.
  * @status 415
  */
 class UnsupportedMediaTypeError extends ResponsableError {
@@ -154,7 +177,9 @@ class UnsupportedMediaTypeError extends ResponsableError {
 }
 
 /**
- * Error class for when a resource is not found
+ * Error class for when a resource cannot be processed.
+ *
+ * @reason Usually due to semantic errors (e.g. validation errors).
  * @status 422
  */
 class UnprocessableEntityError extends ResponsableError {
@@ -165,7 +190,9 @@ class UnprocessableEntityError extends ResponsableError {
 }
 
 /**
- * Error class for when a resource is not found
+ * Error class for when an internal server error occurs.
+ *
+ * @reason Usually due to an unexpected condition that prevented it from fulfilling the request.
  * @status 500
  */
 class InternalServerError extends ResponsableError {
