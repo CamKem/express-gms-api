@@ -110,39 +110,53 @@ products.post('/', async (req, res, next) => {
  * @desc    Replace a product by SKU
  * @access  Public
  */
-products.put('/:sku', async (req, res, next) => {
-    try {
-        const {sku} = req.params;
-        const {name, price, stockOnHand} = req.body || {};
+products.put(skuRegex, async (req, res, next) => {
+    const {sku} = req.params;
+    const {name, price, stockOnHand} = setValue(req.body, {});
+    const routeDocsUrl = `${docsUrl}#replace-a-product`;
 
-        // Validate required fields
-        if (!name || price === undefined || stockOnHand === undefined) {
-            return next(new BadRequestError('Missing required product fields.'));
+    await Product.findOneAndReplace(
+        {sku},
+        {sku, name, price, stockOnHand},
+        {
+            new: true,
+            strict: true,
+            upsert: false,
+            runValidators: true,
+            includeResultMetadata: true,
         }
-
-        // Ensure SKU is not being updated
-        if (req.body.sku && req.body.sku !== sku) {
-            return next(new BadRequestError('Cannot update SKU.'));
-        }
-
-        const product = await Product.findOneAndUpdate(
-            {sku},
-            {name, price, stockOnHand},
-            {new: true, upsert: false}
-        );
-
-        if (!product) {
-            return next(new NotFoundError(`Product with SKU ${sku} not found.`));
-        }
-
-        res.json({
-            statusCode: 200,
-            data: product,
-        });
-    } catch (error) {
-        console.log(error);
-        next(error);
-    }
+    ).exec()
+        .then((result) => {
+            if (result.lastErrorObject.updatedExisting === false) {
+                throw new NotFoundError(`Product with SKU ${sku} not found.`)
+                    .withCode('PRODUCT_NOT_FOUND')
+                    .withDetails('Please check the SKU and try again.')
+                    .withDocsUrl(routeDocsUrl);
+            } else if (result.value === null) {
+                throw new InternalServerError('Product could not be replaced.')
+                    .withCode('RESOURCE_NOT_REPLACED')
+                    .withDetails('Please try again.')
+                    .withDocsUrl(routeDocsUrl)
+            } else {
+                return new APIResponse(req)
+                    .withStatusCode(200)
+                    .withCode('RESOURCE_REPLACED')
+                    .withDocsUrl(routeDocsUrl)
+                    .send(result.value);
+            }
+        })
+        .catch(function (err) {
+            if (err.name === 'ValidationError') {
+                throw new UnprocessableEntityError(setValue(
+                            err._message,
+                            'Product could not be replaced, due to validation errors.'
+                        ))
+                    .withCode('VALIDATION_ERROR')
+                    .withDetails(mapValidationErrors(err.errors))
+                    .withDocsUrl(routeDocsUrl);
+            }
+            return next(err);
+        }).catch(next);
 });
 
 /**
