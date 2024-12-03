@@ -173,7 +173,10 @@ products.patch(skuRegex, async (req, res, next) => {
     const endpointDocsUrl = `${docsUrl}#update-a-product`;
 
     if (Object.keys(updateFields).length === 0) {
-        return new BadRequestError('No fields provided for update.');
+        throw new UnprocessableEntityError('No fields provided for update.')
+            .withCode('UPDATE_FIELDS_REQUIRED')
+            .withDetails('Please provide fields to update.')
+            .withDocsUrl(endpointDocsUrl);
     }
 
     if (updateFields.sku && updateFields.sku !== sku) {
