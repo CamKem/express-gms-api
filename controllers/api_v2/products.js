@@ -66,26 +66,43 @@ products.get(skuRegex, async (req, res, next) => {
  */
 products.post('/', async (req, res, next) => {
 
-    const {sku, name, price, stockOnHand} = req.body || {};
-
-    // Validate required fields
-    if (!sku || !name || price === undefined || stockOnHand === undefined) {
-        throw new BadRequestError('Missing required product fields.');
-    }
-
-    // Check if a product with the same SKU already exists
-    const existingProduct = await Product.findOne({sku});
-    if (existingProduct) {
-        throw new BadRequestError(`Product with SKU ${sku} already exists.`);
-    }
-
+    const {sku, name, price, stockOnHand} = setValue(req.body, {});
+    const endpointDocsUrl = `${docsUrl}#add-a-new-product`;
     const product = new Product({sku, name, price, stockOnHand});
-    await product.save();
+    const validation = product.validateSync();
 
-    res.status(201).json({
-        statusCode: 201,
-        data: product,
-    });
+    if (validation) {
+        throw new UnprocessableEntityError(validation._message)
+            .withCode('VALIDATION_ERROR')
+            .withDetails(mapValidationErrors(validation.errors))
+            .withDocsUrl(endpointDocsUrl);
+    }
+
+    await product.save()
+        .then(product => {
+            return new APIResponse(req)
+                .withStatusCode(201)
+                .withCode('RESOURCE_CREATED')
+                .withDocsUrl(endpointDocsUrl)
+                .send({
+                    message: 'The product has been successfully created.',
+                    product: product
+                });
+        })
+        .catch(error => {
+            if (error.code === 11000) {
+                throw new ConflictError('Product with SKU already exists.')
+                    .withCode('RESOURCE_ALREADY_EXISTS')
+                    .withDocsUrl(endpointDocsUrl)
+                    .withDetails('Please change the SKU and try again.');
+            } else {
+                throw new InternalServerError('Product could not be saved.')
+                    .withCode('RESOURCE_NOT_CREATED')
+                    .withDetails('Please try again.')
+                    .withDocsUrl(endpointDocsUrl);
+            }
+        })
+        .catch(next);
 });
 
 /**
