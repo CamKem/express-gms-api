@@ -4,37 +4,32 @@ const ProductSchema = new mongoose.Schema(
     {
         sku: {
             type: String,
-            required: true,
+            required: [true, 'SKU is required'],
             trim: true,
             unique: true,
-            validate: {
-                validator: (v) => /^[A-Z]{2}-\d{4}-\d{2}$/.test(v),
-                message: (props) => {
-                    return `${props.value} is not a valid SKU!`
-                        + `A valid SKU should be in the format of XX-1234-56`;
-                }
-            }
+            match: [
+                /^[A-Z]{2}-\d{4}-\d{2}$/,
+                'SKU should be in the format of XX-1234-56'
+            ],
         },
         name: {
             type: String,
             required: true,
             trim: true,
-            validate: {
-                validator: (v) => /^[a-zA-Z ]+$/.test(v),
-                message: (props) => {
-                    `${props.value} is not a valid name! (letters and spaces only)`
-                },
-            },
+            match: [
+                /^[a-zA-Z ]+$/,
+                'Name should contain only letters and spaces'
+            ],
         },
         price: {
             type: Number,
-            required: true,
-            min: [0, 'Price must be a non-negative number'],
+            required: [true, 'Price is required'],
+            min: [0, 'Price must be a positive number'],
         },
         stockOnHand: {
             type: Number,
-            required: true,
-            min: [0, 'Stock must be a non-negative number'],
+            required: [true, 'Stock on hand is required'],
+            min: [0, 'Stock must be a positive number'],
         },
     }, {
         timestamps: true,
