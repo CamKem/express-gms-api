@@ -36,7 +36,11 @@ Need to be to document based on the error codes in the codebase
 - RESOURCE_NOT_UPDATED: The resource was not updated. (400)
 - INVALID_FIELDS: The provided fields were invalid. (422) // we are using this for our validation of the payload
 
-
+- AUTH_SUCCESS: The user was authenticated successfully. (200)
+- AUTH_FAILURE: The user was not authenticated. (401)
+- AUTH_ERROR: An error occurred during authentication. (500)
+- INVALID_CREDENTIALS: The provided credentials were invalid. (401)
+- INVALID_TOKEN: The provided token was invalid. (401)
 
 -------------------------------------
 ### Custom Error Responses (5xx)
