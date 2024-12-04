@@ -21,6 +21,14 @@ const logger = (message = null, level = 'info', metadata = {}) => {
     } else {
         if (process.env.LOG_LEVEL === 'file') {
             fileSystemLogger(message, level, metadata);
+
+
+
+
+
+
+
+            consoleLogger(message, level, metadata);
         } else {
             consoleLogger(message, level, metadata);
         }
@@ -59,8 +67,6 @@ const fileSystemLogger = (message, level, metadata) => {
         fs.access(fileName, fs.constants.F_OK, (err) => {
             if (err) {
                 console.log(`Error creating log file: ${err}`);
-            } else {
-                console.log('Log file created successfully');
             }
         });
 
