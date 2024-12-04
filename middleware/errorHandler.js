@@ -14,13 +14,11 @@ import {ErrorResponse} from "../utils/responses.js";
 export default function errorHandler(err, req, res, next) {
     if (!(err instanceof Error)) err = new Error(err);
 
-    // If the error is not a ResponsableError, return Internal Server Error
     if (!(err instanceof ResponsableError)) {
         logger(err.message, 'error', err.stack);
         err = new InternalServerError();
     }
 
-    // Send the error response
     return new ErrorResponse(req)
         .withStatusCode(setValue(err.statusCode, 500))
         .withCode(setValue(err.code, 'INTERNAL_SERVER_ERROR'))
