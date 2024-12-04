@@ -17,7 +17,6 @@ const auth = async (req, res, next) => {
     const token = req.cookies?.token || req.headers.authorization?.split(' ');
 
     if (!token) {
-        console.log('No token found', token);
         throw new ForbiddenError('Authorization header is missing.')
             .withCode('AUTHORIZATION_HEADER_MISSING')
             .withDetails('Unauthorized: Authorization: Bearer <token> header is required.')
@@ -27,14 +26,14 @@ const auth = async (req, res, next) => {
     if (token && token[0].toLowerCase() !== 'bearer') {
         throw new UnauthorizedError('Authorization header is invalid.')
             .withCode('AUTHORIZATION_HEADER_INVALID')
-            .withDetails('Ensure that header value is in the format: Bearer <token>')
+            .withDetails('Unauthorized: Bearer keyword is missing.')
             .withDocsUrl('/api/v1/docs#login-an-employee');
     }
 
     if (token && !token[1]) {
-        throw new UnauthorizedError('Authentication: bearer token is missing.')
+        throw new UnauthorizedError('Authorization header is invalid.')
             .withCode('AUTHORIZATION_HEADER_INVALID')
-            .withDetails('Please ensure that you have a token after the Bearer keyword.')
+            .withDetails('Unauthorized: Bearer token is missing.')
             .withDocsUrl('/api/v1/docs#login-an-employee');
     }
 
