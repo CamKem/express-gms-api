@@ -89,6 +89,13 @@ products.post('/', async (req, res, next) => {
             .withDocsUrl(endpointDocsUrl);
     }
 
+    if (await Product.exists({sku})) {
+        throw new ConflictError('Product with SKU already exists.')
+            .withCode('RESOURCE_ALREADY_EXISTS')
+            .withDocsUrl(endpointDocsUrl)
+            .withDetails('Please change the SKU and try again, or update the existing product.');
+    }
+
     await product.save()
         .then(product => {
             return new APIResponse(req)
@@ -253,7 +260,9 @@ products.delete(skuRegex, async (req, res, next) => {
     const {sku} = req.params;
     const endpointDocsUrl = `${docsUrl}#remove-a-product`;
 
-    await Product.findOneAndDelete({sku}, {includeResultMetadata: true})
+    await Product.findOneAndDelete({sku}, {
+        includeResultMetadata: true
+    })
         .exec()
         .then((result,) => {
             console.log(result);
