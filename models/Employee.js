@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import bcrypt from "bcrypt";
+import jwt from 'jsonwebtoken';
 
 // Define the User schema
 const EmployeeSchema = new mongoose.Schema({
@@ -64,7 +65,7 @@ const EmployeeSchema = new mongoose.Schema({
 EmployeeSchema.pre('save', async function (next) {
     if (!this.isModified('password')) return next();
 
-    const salt = await bcrypt.genSalt(10)
+    const salt = await bcrypt.genSalt(process.env.SALT_ROUNDS)
     this.password = await bcrypt.hash(this.password, salt)
         .catch(err => next(err));
 });
@@ -78,6 +79,16 @@ EmployeeSchema.methods.setEmpId = async function (next) {
 EmployeeSchema.methods.matchPassword = async function (enteredPassword) {
     return await bcrypt.compare(enteredPassword, this.password);
 }
+
+EmployeeSchema.methods.generateAuthToken = function () {
+    return jwt.sign({
+        id: this._id,
+        empId: this.empId,
+        username: this.username,
+    }, process.env.JWT_SECRET, {
+        expiresIn: process.env.JWT_EXPIRES_IN,
+    });
+};
 
 const Employee = mongoose.model('Employee', EmployeeSchema);
 
