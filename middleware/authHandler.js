@@ -50,6 +50,8 @@ const auth = async (req, res, next) => {
         res.clearCookie('token');
         return next(error);
     });
+
+    return next();
 };
 
 export default auth;
