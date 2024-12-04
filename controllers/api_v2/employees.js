@@ -9,6 +9,7 @@ import {
 import {APIResponse} from "../../utils/responses.js";
 import mapValidationErrors from "../../utils/mapValidationErrors.js";
 import Employee from "../../models/Employee.js";
+import auth from "../../middleware/authHandler.js";
 
 /**
  * Product controller
@@ -23,7 +24,7 @@ const docsUrl = `/docs/api/${currentVersion}/employees`;
  *
  * @route   POST /api/v1/employees
  * @desc    Add a new employee
- * @access  Public
+ * @access  Private
  * @param   {string} firstName - Employee's first name
  * @param   {string} lastName - Employee's last name
  * @param   {string} username - Employee's username
@@ -34,7 +35,7 @@ const docsUrl = `/docs/api/${currentVersion}/employees`;
  * @throws  {UnprocessableEntityError} - 422 - Employee validation failed
  * @throws  {InternalServerError} - 500 - Unable to generate a new employee ID
  */
-employees.post('/', async (req, res, next) => {
+employees.post('/', auth, async (req, res, next) => {
     const {firstName, lastName, username, password} = req.body;
     const endpointDocsUrl = `${docsUrl}#add-an-employee`;
     const employee = new Employee({username, password, firstName, lastName});
@@ -119,7 +120,6 @@ employees.post('/login', async (req, res, next) => {
 
                     const token = employee.generateAuthToken();
 
-                    // Set the token as an HTTP-only cookie
                     req.res.cookie('token', token, {
                         httpOnly: true,
                         secure: process.env.NODE_ENV === 'production', // Set to true in production
