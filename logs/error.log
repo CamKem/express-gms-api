@@ -1,0 +1,4 @@
+[2024-12-04T01:15:28.995Z] [ERROR] An error has occurred
+Error: Product with SKU already exists.
+    at file:///Users/cam/Library/Mobile%20Documents/com~apple~CloudDocs/Tafe/Data%20Link%20(Mike)/Project%202/gms_api/controllers/api_v2/products.js:159:15
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
