@@ -1,7 +1,6 @@
-// middleware/auth.js
 import jwt from 'jsonwebtoken';
 import Employee from '../models/Employee.js';
-import {UnauthorizedError} from '../utils/errors.js';
+import {ForbiddenError, UnauthorizedError} from '../utils/errors.js';
 
 /**
  * Authentication Middleware
@@ -18,16 +17,17 @@ const auth = async (req, res, next) => {
     const token = req.cookies?.token || req.headers.authorization?.split(' ');
 
     if (!token) {
-        throw new UnauthorizedError('Authorization header is missing.')
+        console.log('No token found', token);
+        throw new ForbiddenError('Authorization header is missing.')
             .withCode('AUTHORIZATION_HEADER_MISSING')
-            .withDetails('Please add in this format: Authorization: Bearer <token>')
+            .withDetails('Unauthorized: Authorization: Bearer <token> header is required.')
             .withDocsUrl('/api/v1/docs#login-an-employee');
     }
 
     if (token && token[0].toLowerCase() !== 'bearer') {
-        throw new UnauthorizedError('Authentication: Bearer <token> format is required.')
+        throw new UnauthorizedError('Authorization header is invalid.')
             .withCode('AUTHORIZATION_HEADER_INVALID')
-            .withDetails('Please ensure that you have the Bearer keyword before the token.')
+            .withDetails('Ensure that header value is in the format: Bearer <token>')
             .withDocsUrl('/api/v1/docs#login-an-employee');
     }
 
@@ -46,12 +46,12 @@ const auth = async (req, res, next) => {
                 .withCode('INVALID_TOKEN');
         }
 
-        req.auth = {};
+        console.log(decoded);
+
+        req.auth = req.auth || {};
         await Employee.findById(decoded.id).select('-password')
             .exec()
-            .then(employee => {
-                return req.auth.employee = employee;
-            })
+            .then(employee => req.auth.user = employee)
             .catch(error => {
                 if (error) {
                     throw new UnauthorizedError('Employee associated with this token does not exist.')
