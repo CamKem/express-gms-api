@@ -3,8 +3,8 @@ const rootRouter = express.Router();
 import {Response} from "../utils/responses.js";
 
 rootRouter.get('/', (req, res, next) => {
-    res.type('text/html');
-    new Response(req)
+    return new Response(req)
+        .asType('text/html')
         // TODO: write a landing page for accessing the API
         //  and send a html file to be rendered here
         .send('This is an API for testing MongoDB connectivity. You should use /api/v1/')
