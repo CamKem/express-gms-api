@@ -15,7 +15,13 @@ import auth from "../../../middleware/authHandler.js";
 /**
  * Product controller
  * @type {Router}
+ *
+ * @swagger
+ * tags:
+ *   name: Products
+ *   description: Product management
  */
+
 const products = express.Router();
 
 // Global controller values
@@ -27,33 +33,49 @@ const docsUrl = `/docs/api/${currentVersion}/products`;
  * @route   GET /products
  * @desc    Get all products
  * @access  Public
- *
- **/
-
-/**
- * @swagger
- * tags:
- *   name: Products
- *   description: Product management
- */
-
-/**
- * @swagger
- * /products:
- *   get:
- *     summary: Retrieve a list of products
- *     tags: [Products]
- *     responses:
- *       200:
- *         description: A list of products
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Product'
  */
 products.get('/', async (req, res, next) => {
+    /**
+     * @swagger
+     * /products:
+     *   get:
+     *     summary: Retrieve a list of products
+     *     tags: [Products]
+     *     responses:
+     *       200:
+     *         description: A list of products
+     *         content:
+     *           application/json:
+     *             schema:
+     *               type: array
+     *               items:
+     *                 $ref: '#/components/schemas/Product'
+     *       500:
+     *         description: Internal server error
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/InternalServerError'
+     */
+
+    // in terms of query parameters to allow filtering, sorting, and pagination we need to consider the following:
+    // 1. Filtering: We can filter products by name, price, and stockOnHand.
+    // 2. Sorting: We can sort products by name, price, and stockOnHand. and a direction (ascending or descending).
+    // 3. Pagination: We can paginate products by specifying a page number and a page size.
+    // 4. Limiting: We can limit the number of products returned by specifying a limit.
+    // 5. Fields: We can specify the fields to return in the response.
+    // 6. Search: We can search for products by name, price, and stockOnHand.
+    // 7. Aggregation: We can aggregate products by name, price, and stockOnHand.
+    // 8. Grouping: We can group products by name, price, and stockOnHand.
+    // 9. Projection: We can project products by name, price, and stockOnHand.
+
+    // TODO: lets build an abstraction, that can handle all of the above query string parameters
+    //  then we can use it to apply to any mongoose model query we need, we can even set up configuration
+    //  which will change what we allow for any particular instance of the abstraction.
+    //  thing like ?fields=name,price,stockOnHand&sort=name:asc&limit=10&page=1&search=product&aggregate=name,price,stockOnHand&group=name,price,stockOnHand&project=name,price,stockOnHand
+    //  we can make it dynamic using [ square brackets to group multiple values, and : to separate the field and direction
+    //  for example ?fields=[name,price,stockOnHand]&sort=[name:asc,price:desc]&limit=10&page=1&search=product&aggregate=[name,price,stockOnHand]&group=[name,price,stockOnHand]&project=[name,price,stockOnHand]
+
     const products = await Product.find({}, {__v: 0, _id: 0})
         .exec()
         .then(products => products)
@@ -77,32 +99,36 @@ products.get('/', async (req, res, next) => {
  * @desc    Get a product by SKU
  * @access  Public
  */
-
-
-/**
- * @swagger
- * /products/{sku}:
- *   get:
- *     summary: Retrieve a product by SKU
- *     tags: [Products]
- *     parameters:
- *       - in: path
- *         name: sku
- *         required: true
- *         schema:
- *           type: string
- *         description: The SKU of the product
- *     responses:
- *       200:
- *         description: A product
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Product'
- *       404:
- *         description: Product not found
- */
 products.get(skuRegex, async (req, res, next) => {
+    /**
+     * @swagger
+     * /products/{sku}:
+     *   get:
+     *     summary: Retrieve a product by SKU
+     *     tags: [Products]
+     *     parameters:
+     *       - in: path
+     *         name: sku
+     *         required: true
+     *         schema:
+     *           type: string
+     *           pattern: '^[A-Z]{2}-\d{4}-\d{2}$'
+     *           description: The SKU of the product (Format: XX-XXXX-XX)
+     *     responses:
+     *       200:
+     *         description: A product
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/Product'
+     *       404:
+     *         description: Product not found
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/NotFoundError'
+     */
+
     const {sku} = req.params;
     const product = await Product.findOne({sku}, {__v: 0, _id: 0});
 
@@ -138,37 +164,49 @@ products.get(skuRegex, async (req, res, next) => {
  * @throws {ForbiddenError} - 403 - Forbidden
  * @throws {NotFoundError} - 404 - Not found
  */
-
-/**
- * @swagger
- * /products:
- *   post:
- *     summary: Add a new product
- *     consumes: ['application/json']
- *     produces = ['application/json']
- *     tags: [Products]
- *     security:
- *       - jwt: []
- *     requestBody:
- *       description: Product object to be added.
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/NewProduct'
- *     responses:
- *       201:
- *         description: Product created successfully.
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Product'
- *       400:
- *         description: Bad request.
- *       409:
- *         description: Product already exists.
- */
 products.post('/', auth, async (req, res, next) => {
+    /**
+     * @swagger
+     * /products:
+     *   post:
+     *     summary: Add a new product
+     *     tags: [Products]
+     *     security:
+     *       - jwt: []
+     *     requestBody:
+     *       description: Product object to be added.
+     *       required: true
+     *       content:
+     *         application/json:
+     *           schema:
+     *             $ref: '#/components/schemas/NewProduct'
+     *     responses:
+     *       201:
+     *         description: Product created successfully.
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/Product'
+     *       400:
+     *         description: Bad request.
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/BadRequestError'
+     *       409:
+     *         description: Product already exists.
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/ConflictError'
+     *       422:
+     *         description: Validation errors.
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/UnprocessableEntityError'
+     */
+
     const {sku, name, price, stockOnHand} = setValue(req.body, {});
     const endpointDocsUrl = `${docsUrl}#add-a-new-product`;
     const product = new Product({sku, name, price, stockOnHand});
@@ -221,40 +259,49 @@ products.post('/', auth, async (req, res, next) => {
  * @desc    Replace a product by SKU
  * @access  Public
  */
-
-/**
- * @swagger
- * /products/{sku}:
- *   put:
- *     summary: Replace a product by SKU
- *     tags: [Products]
- *     parameters:
- *       - in: path
- *         name: sku
- *         required: true
- *         schema:
- *           type: string
- *         description: The SKU of the product
- *     requestBody:
- *       description: Product object to replace.
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/Product'
- *     responses:
- *       200:
- *         description: Product replaced successfully.
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Product'
- *       404:
- *         description: Product not found.
- *       422:
- *         description: Validation errors.
- */
 products.put(skuRegex, async (req, res, next) => {
+    /**
+     * @swagger
+     * /products/{sku}:
+     *   put:
+     *     summary: Replace a product by SKU
+     *     tags: [Products]
+     *     parameters:
+     *       - in: path
+     *         name: sku
+     *         required: true
+     *         schema:
+     *           type: string
+     *           pattern: '^[A-Z]{2}-\d{4}-\d{2}$'
+     *         description: "The SKU of the product (Format: XX-XXXX-XX)"
+     *     requestBody:
+     *       description: Product object to replace.
+     *       required: true
+     *       content:
+     *         application/json:
+     *           schema:
+     *             $ref: '#/components/schemas/Product'
+     *     responses:
+     *       200:
+     *         description: Product replaced successfully.
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/Product'
+     *       404:
+     *         description: Product not found.
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/NotFoundError'
+     *       422:
+     *         description: Validation errors.
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/UnprocessableEntityError'
+     */
+
     const {sku} = req.params;
     const {name, price, stockOnHand} = setValue(req.body, {});
     const routeDocsUrl = `${docsUrl}#replace-a-product`;
@@ -311,49 +358,62 @@ products.put(skuRegex, async (req, res, next) => {
  * @desc    Update a product by SKU
  * @access  Public
  */
-
-/**
- * @swagger
- * /products/{sku}:
- *   patch:
- *     summary: Update a product by SKU
- *     tags: [Products]
- *     parameters:
- *       - in: path
- *         name: sku
- *         required: true
- *         schema:
- *           type: string
- *         description: The SKU of the product
- *     requestBody:
- *       description: Fields to update in the product.
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               name:
- *                 type: string
- *               price:
- *                 type: number
- *               stockOnHand:
- *                 type: number
- *     responses:
- *       200:
- *         description: Product updated successfully.
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Product'
- *       400:
- *         description: Bad request.
- *       404:
- *         description: Product not found.
- *       422:
- *         description: Validation errors.
- */
 products.patch(skuRegex, async (req, res, next) => {
+    /**
+     * @swagger
+     * /products/{sku}:
+     *   patch:
+     *     summary: Update a product by SKU
+     *     tags: [Products]
+     *     parameters:
+     *       - in: path
+     *         name: sku
+     *         required: true
+     *         schema:
+     *           type: string
+     *           pattern: '^[A-Z]{2}-\d{4}-\d{2}$'
+     *         description: "The SKU of the product (Format: XX-XXXX-XX)"
+     *     requestBody:
+     *       description: Fields to update in the product.
+     *       required: true
+     *       content:
+     *         application/json:
+     *           schema:
+     *             type: object
+     *             properties:
+     *               name:
+     *                 type: string
+     *               price:
+     *                 type: number
+     *               stockOnHand:
+     *                 type: number
+     *     responses:
+     *       200:
+     *         description: Product updated successfully.
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/Product'
+     *       400:
+     *         description: Bad request.
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/BadRequestError'
+     *       404:
+     *         description: Product not found.
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/NotFoundError'
+     *       422:
+     *         description: Validation errors.
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/UnprocessableEntityError'
+     */
+
     const {sku} = req.params;
     const updateFields = {...req.body} || {};
     const endpointDocsUrl = `${docsUrl}#update-a-product`;
@@ -423,38 +483,47 @@ products.patch(skuRegex, async (req, res, next) => {
  * @desc    Remove a product by SKU
  * @access  Public
  */
-
-/**
- * @swagger
- * /products/{sku}:
- *   delete:
- *     summary: Remove a product by SKU
- *     tags: [Products]
- *     parameters:
- *       - in: path
- *         name: sku
- *         required: true
- *         schema:
- *           type: string
- *         description: The SKU of the product
- *     responses:
- *       200:
- *         description: Product deleted successfully.
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                 product:
- *                   $ref: '#/components/schemas/Product'
- *       404:
- *         description: Product not found.
- *       500:
- *         description: Product could not be deleted.
- */
 products.delete(skuRegex, async (req, res, next) => {
+    /**
+     * @swagger
+     * /products/{sku}:
+     *   delete:
+     *     summary: Remove a product by SKU
+     *     tags: [Products]
+     *     parameters:
+     *       - in: path
+     *         name: sku
+     *         required: true
+     *         schema:
+     *           type: string
+     *           pattern: '^[A-Z]{2}-\d{4}-\d{2}$'
+     *         description: "The SKU of the product (Format: XX-XXXX-XX)"
+     *     responses:
+     *       200:
+     *         description: Product deleted successfully.
+     *         content:
+     *           application/json:
+     *             schema:
+     *               type: object
+     *               properties:
+     *                 message:
+     *                   type: string
+     *                 product:
+     *                   $ref: '#/components/schemas/Product'
+     *       404:
+     *         description: Product not found.
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/NotFoundError'
+     *       500:
+     *         description: Product could not be deleted.
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/InternalServerError'
+     */
+
     const {sku} = req.params;
     const endpointDocsUrl = `${docsUrl}#remove-a-product`;
 
