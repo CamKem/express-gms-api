@@ -165,8 +165,10 @@ products.get(skuRegex, async (req, res, next) => {
  *               $ref: '#/components/schemas/Product'
  *       400:
  *         description: Bad request.
+ *       409:
  *         description: Product already exists.
  */
+products.post('/', auth, async (req, res, next) => {
     const {sku, name, price, stockOnHand} = setValue(req.body, {});
     const endpointDocsUrl = `${docsUrl}#add-a-new-product`;
     const product = new Product({sku, name, price, stockOnHand});
