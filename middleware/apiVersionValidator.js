@@ -3,9 +3,10 @@ import path from 'node:path';
 import { NotFoundError, UnprocessableEntityError } from '../utils/errors.js';
 import { setValue } from '../utils/setValue.js';
 
-const validateApiVersion = (currentVersion) => async (request, response, next) => {
+const validateApiVersion = async (request, response, next) => {
     const version = setValue(request.url.split('/')[1], null);
     const versionNumber = setValue(parseInt(version.replace('v', ''), 10), 0);
+    const currentVersion = setValue(process.env.API_VERSION, 'v1');
     const endpointDocsUrl = `/docs/api/${currentVersion}/`;
     const currentVersionNumber = setValue(currentVersion.split('v')[1], 1);
 
