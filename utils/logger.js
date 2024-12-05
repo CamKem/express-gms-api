@@ -21,13 +21,6 @@ const logger = (message = null, level = 'info', metadata = {}) => {
     } else {
         if (process.env.LOG_LEVEL === 'file') {
             fileSystemLogger(message, level, metadata);
-
-
-
-
-
-
-
             consoleLogger(message, level, metadata);
         } else {
             consoleLogger(message, level, metadata);
