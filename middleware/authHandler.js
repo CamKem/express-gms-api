@@ -59,8 +59,6 @@ const auth = async (req, res, next) => {
                 .withCode('INVALID_TOKEN');
         }
 
-        console.log(decoded);
-
         req.auth = req.auth || {};
         await Employee.findById(decoded.id).select('-password')
             .exec()
