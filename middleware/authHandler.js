@@ -14,30 +14,44 @@ import {ForbiddenError, UnauthorizedError} from '../utils/errors.js';
  * @param {Function} next - Express next middleware function
  */
 const auth = async (req, res, next) => {
-    const token = req.cookies?.token || req.headers.authorization?.split(' ');
+    const authCookie = req.headers.cookie?.split('=');
+    const authCookieValue = authCookie?.[0] === 'token' ? authCookie[1] : null;
+    const authHeader = req.headers.authorization;
 
-    if (!token) {
-        throw new ForbiddenError('Authorization header is missing.')
-            .withCode('AUTHORIZATION_HEADER_MISSING')
-            .withDetails('Unauthorized: Authorization: Bearer <token> header is required.')
+    let token = null;
+
+    if (!authCookieValue && !authHeader) {
+        throw new ForbiddenError('Authorization not provided.')
+            .withCode('AUTHORIZATION_NOT_PROVIDED')
+            .withDetails('You need to provide a token in the Authorization header or a cookie.')
             .withDocsUrl('/api/v1/docs#login-an-employee');
     }
 
-    if (token && token[0].toLowerCase() !== 'bearer') {
-        throw new UnauthorizedError('Authorization header is invalid.')
-            .withCode('AUTHORIZATION_HEADER_INVALID')
-            .withDetails('Unauthorized: Bearer keyword is missing.')
-            .withDocsUrl('/api/v1/docs#login-an-employee');
+    if (authCookieValue) {
+        token = authCookieValue;
+    } else if (authHeader) {
+        if (!authHeader.startsWith('Bearer ')) {
+            throw new UnauthorizedError('Authorization header is invalid.')
+                .withCode('AUTHORIZATION_HEADER_INVALID')
+                .withDetails('Unauthorized: Bearer keyword is missing.')
+                .withDocsUrl('/api/v1/docs#login-an-employee');
+        } else if (!authHeader.split(' ')[1]) {
+            throw new UnauthorizedError('Authorization header is invalid.')
+                .withCode('AUTHORIZATION_HEADER_INVALID')
+                .withDetails('Unauthorized: Bearer token is missing.')
+                .withDocsUrl('/api/v1/docs#login-an-employee');
+        }
+
+        token = authHeader.split(' ')[1];
+        if (!token) {
+            throw new UnauthorizedError('Authorization header is invalid.')
+                .withCode('AUTHORIZATION_HEADER_INVALID')
+                .withDetails('Unauthorized: Bearer token is missing.')
+                .withDocsUrl('/api/v1/docs#login-an-employee');
+        }
     }
 
-    if (token && !token[1]) {
-        throw new UnauthorizedError('Authorization header is invalid.')
-            .withCode('AUTHORIZATION_HEADER_INVALID')
-            .withDetails('Unauthorized: Bearer token is missing.')
-            .withDocsUrl('/api/v1/docs#login-an-employee');
-    }
-
-    await jwt.verify(token[1], process.env.JWT_SECRET, async (error, decoded) => {
+    await jwt.verify(token, process.env.JWT_SECRET, async (error, decoded) => {
         if (error) {
             throw new UnauthorizedError('Authentication failure: invalid token.')
                 .withDetails(error)
@@ -60,7 +74,9 @@ const auth = async (req, res, next) => {
                 }
             });
     }).catch(error => {
-        res.clearCookie('token');
+        if (authCookieValue) {
+            res.clearCookie('token');
+        }
         return next(error);
     });
 
