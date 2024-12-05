@@ -5,11 +5,11 @@ import {
     InternalServerError,
     UnauthorizedError,
     UnprocessableEntityError
-} from '../../utils/errors.js';
-import {APIResponse} from "../../utils/responses.js";
-import mapValidationErrors from "../../utils/mapValidationErrors.js";
-import Employee from "../../models/Employee.js";
-import auth from "../../middleware/authHandler.js";
+} from '../../../utils/errors.js';
+import {APIResponse} from "../../../utils/responses.js";
+import mapValidationErrors from "../../../utils/mapValidationErrors.js";
+import Employee from "../../../models/Employee.js";
+import auth from "../../../middleware/authHandler.js";
 
 /**
  * Product controller
