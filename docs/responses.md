@@ -1,6 +1,5 @@
 # Responses
-
-Need to be to document based on the error codes in the codebase
+This is the codes associated with all the error responses that the API can return.
 
 ### Standard Error Responses (4xx and 5xx)
 - BAD_REQUEST: The request was malformed. (400)
@@ -45,14 +44,3 @@ Need to be to document based on the error codes in the codebase
 - AUTHORIZATION_NOT_PROVIDED: a valid authorization method was not provided (403)
 - AUTHORIZATION_HEADER_INVALID: The authorization header was invalid. (401)
 - EMPLOYEE_NOT_FOUND: The employee was not found. (401) // for when the employee associated with the token is not found
-
--------------------------------------
-### Custom Error Responses (5xx)
-[//]: # (TODO: list all of the custom error codes here)
-[//]: # (TODO: we will set up automatic docs linking &#40;HATEOAS&#41; for each endpoint and error code)
-
-### For successful responses;
-[//]: # (TODO: decide if we want to offer custom response codes for each endpoint or just use the generic "OK" code)
-[//]: # (TODO: also decide if we want to pass a message in the response for successful requests)
-[//]: # (TODO: include dynamic links to the documentation for each endpoint, error & nuanced response code)
-[//]: # (TODO: work out of we want to include the name of the resource in the structure, eg. "user" or "product")
