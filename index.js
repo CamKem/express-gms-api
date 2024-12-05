@@ -2,7 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import mongoose from 'mongoose';
-import { apiRouter } from './routes/apiRouter.js';
+import apiRouter from './routes/apiRouter.js';
 import rootRouter from './routes/rootRouter.js';
 import fallbackRouter from './routes/fallbackRouter.js';
 import errorHandler from './middleware/errorHandler.js';
@@ -36,24 +36,27 @@ mongoose.connection.on("error", (err) => {
 // DB Connection & Server Start
 mongoose.connect(process.env.DB_CONNECTION_STRING)
     .then(() => {
-        console.log('Database connected');
-
-        // Routers
+        //Routers
         app.use('/', rootRouter);
         app.use('/api', apiRouter);
         app.use(fallbackRouter);
 
-        // Global Error/Exception Handler
+        // Global Exception/Error Handler
         app.use(errorHandler);
 
+        console.log('API Routes loaded', apiRouter.stack);
+    })
+    .catch(err => {
+        if (err) {
+            logger('DB Error Occurred', 'error', err);
+            process.exit(1);
+        }
+    })
+    .finally(() => {
         const isMainFile = process.argv.filter(arg => arg.includes('index.js')).length > 0;
         if (isMainFile) {
             app.listen(port, () => {
-                console.log(`Server running on ${host}:${port}`);
+                console.info(`Server running on ${host}:${port}`);
             });
         }
-    })
-    .catch(err => {
-        throw new Error("DB connection error: " + err);
-        process.exit(1);
     });
