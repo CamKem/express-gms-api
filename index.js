@@ -3,13 +3,14 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import mongoose from 'mongoose';
 import apiRouter from './routes/apiRouter.js';
-import rootRouter from './routes/rootRouter.js';
+import homeRouter from './routes/homeRouter.js';
 import fallbackRouter from './routes/fallbackRouter.js';
 import errorHandler from './middleware/errorHandler.js';
 import {setValue} from "./utils/setValue.js";
 import setUniqueRequestId from "./middleware/setUniqueRequestId.js";
 import rateLimiter from "./middleware/rateLimiter.js";
 import logger from "./utils/logger.js";
+import setupSwagger from "./swagger.js";
 
 // Load environment variables
 dotenv.config();
@@ -36,8 +37,11 @@ mongoose.connection.on("error", (err) => {
 // DB Connection & Server Start
 mongoose.connect(process.env.DB_CONNECTION_STRING)
     .then(() => {
+        // Setup Swagger UI
+        setupSwagger(app);
+
         //Routers
-        app.use('/', rootRouter);
+        app.use('/', homeRouter);
         app.use('/api', apiRouter);
         app.use(fallbackRouter);
 
