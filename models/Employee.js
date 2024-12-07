@@ -90,6 +90,24 @@ EmployeeSchema.methods.generateAuthToken = function () {
     });
 };
 
+/**
+ * @summary Employee Login definition
+ * @typedef {object} EmployeeLogin
+ * @property {string} username.required - Employee's username
+ * @property {string} password.required - Employee's password
+ */
+
+/**
+ * @summary Employee definition
+ * @typedef {object} Employee
+ * @property {number} empId.required - The employee ID
+ * @property {string} firstName.required - Employee's first name
+ * @property {string} lastName.required - Employee's last name
+ * @property {string} username.required - Employee's username
+ * @property {string} password.required - Employee's password
+ * @property {string} createdAt - Date of creation
+ * @property {string} updatedAt - Date of last update
+ */
 const Employee = mongoose.model('Employee', EmployeeSchema);
 
 export default Employee;

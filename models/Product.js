@@ -42,6 +42,16 @@ const ProductSchema = new mongoose.Schema(
         }
     });
 
+/**
+ * @summary Grocery product definition
+ * @typedef {object} Product
+ * @property {string} sku.required - The SKU of the product (Format: XX-XXXX-XX)
+ * @property {string} name.required - Product name
+ * @property {number} price.required - Product price - int64
+ * @property {number} stockOnHand.required - Product stock on hand - int64
+ * @property {string} createdAt - Product creation date
+ * @property {string} updatedAt - Product last update date
+ */
 const Product = mongoose.model('Product', ProductSchema);
 
 export default Product;
