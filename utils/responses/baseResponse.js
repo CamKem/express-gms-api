@@ -1,9 +1,21 @@
 /**
- * Base Response class for handling API responses
- * @constructor
- * @param request
- * @param type
- * @returns Response object
+ * The Base Response which is extended by the APIResponse and ErrorResponse classes
+ *
+ * @param {object} request - Request object
+ * @param {string} type - Type of response (success or error)
+ * @property {object} request - Request object
+ * @property {string} type - Type of response (success or error)
+ * @property {number} status_code - HTTP status code
+ * @property {string} response_code - Response code
+ * @property {string} request_id - Request ID
+ * @property {string} docs_url - URL to the API documentation
+ * @function withCode - Set the response code
+ * @function withStatusCode - Set the HTTP status code
+ * @function withRequestId - Set the request ID
+ * @function withDocsUrl - Set the URL to the API documentation
+ * @function withLocation - Set the location header
+ * @function withHeaders - Set response headers
+ * @function send - Send the response
  */
 class BaseResponse {
 
@@ -62,61 +74,4 @@ class BaseResponse {
     }
 }
 
-/**
- * API response class for handling API success responses
- * @extends BaseResponse
- * @constructor
- * @param request
- * @returns Response object
- */
-class APIResponse extends BaseResponse {
-    constructor(request) {
-        super(request, 'success');
-    }
-}
-
-/**
- * Error response class for handling API error responses
- * @extends APIResponse
- * @constructor
- * @param request
- * @returns Response object
- */
-class ErrorResponse extends BaseResponse {
-    constructor(request) {
-        super(request, 'error');
-    }
-}
-
-/**
- * Response class for handling non-API responses
- *
- * @constructor
- * @param request
- * @returns Response object
- */
-
-// Uncaught ReferenceError: Cannot access 'Response' before initialization/
-    // To fix this, we need to rename the Response class in the responses.js file to something else.
-
-class Response {
-    constructor(request) {
-        this.request = request;
-        this.status_code = 200;
-        this.type = 'text/html';
-    }
-
-    asType(type) {
-        this.type = type;
-        return this;
-    }
-
-    send(view) {
-        return this.request.res
-            .status(this.status_code)
-            .type(this.type)
-            .send(view);
-    }
-}
-
-export { APIResponse, ErrorResponse, Response };
+export default BaseResponse;
