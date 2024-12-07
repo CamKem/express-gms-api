@@ -41,9 +41,8 @@ const options = {
     ],
     swaggerUIPath: '/api-docs', // Endpoint for Swagger UI rendering
     exposeSwaggerUI: true,
-    exposeApiDocs: false,
-    apiDocsPath: '/{version}/api-docs', // we need to allow for versioning, to assist with dynamic versioning to ensure the correct version is displayed
-    // You can add more options as needed
+    exposeApiDocs: true,
+    apiDocsPath: '/api-docs/raw', // Endpoint for accessing API docs
     notRequiredAsNullable: false,
 };
 
