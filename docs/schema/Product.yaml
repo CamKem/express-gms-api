@@ -1,0 +1,51 @@
+# swaggerComponents.yaml
+
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        sku:
+          type: string
+          description: "The SKU of the product (Format: XX-XXXX-XX)"
+          pattern: '^[A-Z]{2}-\d{4}-\d{2}$'
+        name:
+          type: string
+          description: "Product name"
+        price:
+          type: number
+          description: "Product price"
+          minimum: 0
+        stockOnHand:
+          type: number
+          description: "Product stock on hand"
+          minimum: 0
+      required:
+        - sku
+        - name
+        - price
+        - stockOnHand
+
+    NewProduct:
+      type: object
+      properties:
+        sku:
+          type: string
+          description: "The SKU of the product (Format: XX-XXXX-XX)"
+          pattern: '^[A-Z]{2}-\d{4}-\d{2}$'
+        name:
+          type: string
+          description: "Product name"
+        price:
+          type: number
+          description: "Product price"
+          minimum: 0
+        stockOnHand:
+          type: number
+          description: "Product stock on hand"
+          minimum: 0
+      required:
+        - sku
+        - name
+        - price
+        - stockOnHand
