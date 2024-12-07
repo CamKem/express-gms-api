@@ -6,7 +6,6 @@
   "scripts": {
     "monitor": "nodemon index.js --trace-warnings",
     "serve": "node index.js --trace-warnings",
-    "swagger": "node swagger.js",
     "test": "jest",
     "test:watch": "jest --watch",
     "clear:logs": "rm -rf logs/error.log"
@@ -28,6 +27,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^5.0.1",
+    "express-jsdoc-swagger": "^1.8.0",
     "express-rate-limit": "^7.4.1",
     "fast-glob": "^3.3.2",
     "jsonwebtoken": "^9.0.2",
