@@ -1,13 +1,11 @@
-// swaggerExpressJSDoc.js
-
 import expressJsdocSwagger from 'express-jsdoc-swagger';
 
 // Swagger definition
 const options = {
     info: {
         version: '1.0.0',
-        title: 'GMS API Documentation',
-        description: 'API Documentation for the GMS API',
+        title: 'GMS API Endpoints Docs',
+        description: 'Documentation describing the API endpoints available in the grocery management system (GMS) API',
     },
     servers: [
         {
@@ -34,10 +32,10 @@ const options = {
     },
     baseDir: process.cwd(), // Your project's root directory
     filesPattern: [
-        './controllers/api/**/*.js', // Path to your route files
-        './models/**/*.js', // Path to your model files
-        './middleware/**/*.js', // Path to your middleware files
-        './utils/**/*.js', // Path to your utility files
+        './controllers/api/**/*.js',
+        './models/**/*.js',
+        './middleware/**/*.js',
+        './utils/**/*.js',
     ],
     swaggerUIPath: '/api-docs', // Endpoint for Swagger UI rendering
     exposeSwaggerUI: true,
@@ -49,7 +47,6 @@ const options = {
 // Initialize Swagger
 const setupExpressJSDocSwagger = (app) => {
     expressJsdocSwagger(app)(options);
-    console.log('express-jsdoc-swagger is available at /api-docs');
 };
 
 export default setupExpressJSDocSwagger;

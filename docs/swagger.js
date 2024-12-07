@@ -54,8 +54,6 @@ const mongooseToOpenAPI = (mongooseSchema) => {
                 type = 'string';
         }
 
-        //console.log(path, schemaType);
-
         openAPISchema.properties[path] = { type };
         if (format) {
             openAPISchema.properties[path].format = format;
@@ -67,8 +65,6 @@ const mongooseToOpenAPI = (mongooseSchema) => {
             openAPISchema.required.push(path);
         }
     });
-
-    //console.log(`OpenAPI schema: ${JSON.stringify(openAPISchema)}`);
 
     return openAPISchema;
 };
@@ -93,9 +89,6 @@ const initializeSwagger = () => {
             }
         });
     });
-
-   console.log(`Swagger definitions: ${JSON.stringify(swaggerDefinitions)}`);
-
     return swaggerDefinitions;
 };
 

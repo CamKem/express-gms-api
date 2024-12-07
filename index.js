@@ -10,7 +10,8 @@ import {setValue} from "./utils/setValue.js";
 import setUniqueRequestId from "./middleware/setUniqueRequestId.js";
 import rateLimiter from "./middleware/rateLimiter.js";
 import logger from "./utils/logger.js";
-import setupSwagger from "./swagger.js";
+import setupSwagger from "./docs/swagger.js";
+import setupExpressJSDocSwagger from "./docs/swaggerExpressJSDoc.js";
 
 // Load environment variables
 dotenv.config();
@@ -38,7 +39,7 @@ mongoose.connection.on("error", (err) => {
 mongoose.connect(process.env.DB_CONNECTION_STRING)
     .then(() => {
         // Setup Swagger UI
-        setupSwagger(app);
+        setupExpressJSDocSwagger(app);
 
         //Routers
         app.use('/', homeRouter);
