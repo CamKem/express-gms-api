@@ -6,7 +6,7 @@ const homeRouter = express.Router();
 homeRouter.get('/', (req, res, next) => {
     return new HtmlResponse(req)
         // TODO: write a landing page for accessing the API, send html for rendering
-        .send('This is an API for testing MongoDB connectivity. You should use /api/v1/')
+        .send('This is the landing page for the GMS API, please visit /api-docs for API documentation')
 });
 
 export default homeRouter;
