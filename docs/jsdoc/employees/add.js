@@ -1,4 +1,16 @@
 /**
+ * POST /employees
+ * @summary Add a new employee
+ * @tags Employees
+ * @security BearerAuth
+ * @param {Employee} request.body.required - Employee info
+ * @return {APIResponse} 201 - Employee successfully created
+ * @return {ErrorResponse} 401 - Unauthorized
+ * @return {ErrorResponse} 403 - Forbidden
+ * @return {ErrorResponse} 409 - Employee with username already exists
+ * @return {ErrorResponse} 422 - Employee validation failed
+ * @return {ErrorResponse} 500 - Unable to generate a new employee ID
+ *
  * @example request - Add a new employee
  * {
  *   "firstName": "John",

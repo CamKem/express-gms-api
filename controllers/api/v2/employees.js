@@ -1,6 +1,5 @@
 import express from 'express';
 import {
-    BadRequestError,
     ConflictError,
     InternalServerError,
     UnauthorizedError,
@@ -94,9 +93,10 @@ employees.post('/', auth, async (req, res, next) => {
  * @tags Employees
  * @param {EmployeeLogin} request.body.required - Employee login info
  * @returns {APIResponse} - 200 - Successfully logged in
- * @returns {UnauthorizedError} - 401 - Invalid credentials
- * @returns {UnprocessableEntityError} - 422 - Invalid credentials
- * @returns {InternalServerError} - 500 - Unable to log in
+ * @returns {ErrorResponse} - 401 - Invalid credentials
+ * @returns {ErrorResponse} - 422 - Invalid credentials
+ * @returns {ErrorResponse} - 500 - Unable to log in
+ * For the full OpenAPI specification jsdoc, visit:
  * @see ./docs/jsdoc/employees/login.js
  */
 employees.post('/login', async (req, res, next) => {

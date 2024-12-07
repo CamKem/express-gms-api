@@ -1,4 +1,15 @@
 /**
+ * PUT /products/{sku}
+ * @summary Replace a product by SKU
+ * @tags Products
+ * @param {string} sku.path - SKU of the product - eg: XX-1234-56
+ * @param {Product} request.body.required - Product object to replace - application/json
+ * @security BearerAuth
+ * @returns {APIResponse} 200 - Product replaced successfully
+ * @returns {ErrorResponse} 404 - Product not found
+ * @returns {ErrorResponse} 422 - Validation errors
+ * @returns {ErrorResponse} 500 - Product could not be replaced
+ *
  * @example request - Replace a product
  * {
  *   "sku": "ABC-1234-56",

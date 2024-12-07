@@ -1,4 +1,10 @@
 /**
+ * GET /products
+ * @summary Retrieve a list of products
+ * @tags Products
+ * @return {APIResponse} 200 - success response
+ * @return {ErrorResponse} 500 - Internal server error
+ *
  * @example response - 200 - success response
  * {
  *   "status": "success",

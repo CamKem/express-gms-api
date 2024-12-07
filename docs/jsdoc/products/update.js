@@ -1,4 +1,16 @@
 /**
+ * PATCH /products/{sku}
+ * @summary Update a product by SKU
+ * @tags Products
+ * @param {string} sku.path - SKU of the product - eg: XX-1234-56
+ * @param {Product} request.body.required - Product object to update - application/json
+ * @security BearerAuth
+ * @returns {APIResponse} 200 - Product updated successfully
+ * @returns {ErrorResponse} 400 - Update not allowed
+ * @returns {ErrorResponse} 404 - Product not found
+ * @returns {ErrorResponse} 422 - Update fields required
+ * @returns {ErrorResponse} 422 - Validation errors
+ * @returns {ErrorResponse} 500 - Resource not updated
  *
  * @example request - Update a product
  * {

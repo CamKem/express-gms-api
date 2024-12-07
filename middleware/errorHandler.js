@@ -6,6 +6,7 @@ import ErrorResponse from "../utils/responses/errorResponse.js";
 
 /**
  * Error handler middleware
+ *
  * @param err
  * @param req
  * @param res

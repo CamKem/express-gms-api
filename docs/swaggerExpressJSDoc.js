@@ -31,11 +31,13 @@ const options = {
         }
     },
     baseDir: process.cwd(), // Your project's root directory
+    basePath: '/api/{version}', // Base path for the API
     filesPattern: [
-        './controllers/api/**/*.js',
+        './docs/jsdoc/**/*.js',
+        // './controllers/api/**/*.js',
         './models/**/*.js',
-        './middleware/**/*.js',
         './utils/**/*.js',
+
     ],
     swaggerUIPath: '/api-docs', // Endpoint for Swagger UI rendering
     exposeSwaggerUI: true,

@@ -1,4 +1,13 @@
 /**
+ * POST /employees/login
+ * @summary Login an employee
+ * @tags Employees
+ * @param {EmployeeLogin} request.body.required - Employee login info
+ * @returns {APIResponse} - 200 - Successfully logged in
+ * @returns {ErrorResponse} - 401 - Invalid credentials
+ * @returns {ErrorResponse} - 422 - Invalid credentials
+ * @returns {ErrorResponse} - 500 - Unable to log in
+ *
  * @example request - Login an employee
  * {
  *   "username": "johndoe",

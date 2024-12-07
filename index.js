@@ -10,7 +10,6 @@ import {setValue} from "./utils/setValue.js";
 import setUniqueRequestId from "./middleware/setUniqueRequestId.js";
 import rateLimiter from "./middleware/rateLimiter.js";
 import logger from "./utils/logger.js";
-import setupSwagger from "./docs/swagger.js";
 import setupExpressJSDocSwagger from "./docs/swaggerExpressJSDoc.js";
 
 // Load environment variables

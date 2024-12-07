@@ -3,6 +3,7 @@ import {NotAcceptableError, UnsupportedMediaTypeError} from "../utils/errors/err
 /**
  *  Check the content-type and accept headers of the request
  *  Parse the request body if it is valid JSON
+ *
  *  @param {Request} req - The request object
  *  @param {Response} res - The response object
  *  @param {NextFunction} next - The next function

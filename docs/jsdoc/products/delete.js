@@ -1,4 +1,13 @@
 /**
+ * DELETE /products/:sku
+ * @summary Remove a product by SKU
+ * @tags Products
+ * @param {string} sku.path - SKU of the product - eg: XX-1234-56
+ * @security BearerAuth
+ * @returns {APIResponse} 200 - Product deleted successfully
+ * @returns {ErrorResponse} 404 - Product not found
+ * @returns {ErrorResponse} 500 - Product could not be deleted
+ *
  * @example response - 200 - Product deleted successfully
  * {
  *   "status": "success",
