@@ -26,6 +26,7 @@ class BaseResponse {
         this.response_code = 'OK';
         this.request_id = request.requestId;
         this.docs_url = `/docs/api/${process.env.API_VERSION}/search/${this.response_code}`;
+        this.response = {}
     }
 
     withCode(code) {
@@ -60,17 +61,26 @@ class BaseResponse {
         return this;
     }
 
+    addToResponse(data) {
+        this.response['status'] = this.type;
+        this.response['code'] = this.response_code;
+        this.response['data'] = data;
+        this.response['path'] = this.request.baseUrl + this.request.path;
+        this.response['method'] = this.request.method;
+        this.response['requestId'] = this.request_id;
+        this.response['docs'] = this.docs_url;
+        return this;
+    }
+    
+    addProperty(key, value) {
+        this.response[key] = value;
+        return this;
+    }
+
     send(data) {
+        this.addToResponse(data);
         return this.request.res.status(this.status_code)
-            .json({
-                status: this.type,
-                code: this.response_code,
-                data: data,
-                path: this.request.baseUrl + this.request.path,
-                method: this.request.method,
-                requestId: this.request_id,
-                docs: this.docs_url
-            });
+            .json(this.response);
     }
 }
 
