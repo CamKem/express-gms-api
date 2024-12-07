@@ -1,3 +1,6 @@
+/**
+ * Maps validation errors to a more readable format
+ */
 const mapValidationErrors = (validationErrors) => {
     return Object.keys(validationErrors).map(key => {
         const error = validationErrors[key];

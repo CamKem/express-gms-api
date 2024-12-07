@@ -1,5 +1,5 @@
 import express from 'express';
-import {BadRequestError} from "../utils/errors.js";
+import {BadRequestError} from "../utils/errors/errors.js";
 
 /**
  * Parse the request body as JSON

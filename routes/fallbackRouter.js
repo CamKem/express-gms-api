@@ -1,5 +1,5 @@
 import express from 'express';
-import { NotFoundError } from '../utils/errors.js';
+import { NotFoundError } from '../utils/errors/errors.js';
 
 const fallbackRouter = express.Router();
 

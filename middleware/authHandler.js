@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import Employee from '../models/Employee.js';
-import {ForbiddenError, UnauthorizedError} from '../utils/errors.js';
+import {ForbiddenError, UnauthorizedError} from '../utils/errors/errors.js';
 
 /**
  * Authentication Middleware
@@ -44,16 +44,16 @@ const auth = async (req, res, next) => {
 
         token = authHeader.split(' ')[1];
         if (!token) {
-            throw new UnauthorizedError('Authorization header is invalid.')
-                .withCode('AUTHORIZATION_HEADER_INVALID')
-                .withDetails('Unauthorized: Bearer token is missing.')
+            throw new UnauthorizedError('Authentication failure:No valid token found')
+                .withCode('INVALID_TOKEN')
+                .withDetails('Please log in again to get a new token.')
                 .withDocsUrl('/api/v1/docs#login-an-employee');
         }
     }
 
     await jwt.verify(token, process.env.JWT_SECRET, async (error, decoded) => {
         if (error) {
-            throw new UnauthorizedError('Authentication failure: invalid token.')
+            throw new UnauthorizedError('Authentication failure: could not verify token.')
                 .withDetails(error)
                 .withDocsUrl('/api/v1/docs#login-an-employee')
                 .withCode('INVALID_TOKEN');

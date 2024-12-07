@@ -47,8 +47,6 @@ mongoose.connect(process.env.DB_CONNECTION_STRING)
 
         // Global Exception/Error Handler
         app.use(errorHandler);
-
-        console.log('API Routes loaded', apiRouter.stack);
     })
     .catch(err => {
         if (err) {

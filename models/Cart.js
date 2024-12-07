@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import Product from "./Product.js";
-import { BadRequestError } from '../utils/errors.js';
+import { BadRequestError } from '../utils/errors/errors.js';
 
 const ProductSchema = new mongoose.Schema({
     sku: {

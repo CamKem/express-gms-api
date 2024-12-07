@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'node:path';
-import { NotFoundError, UnprocessableEntityError } from '../utils/errors.js';
+import { NotFoundError, UnprocessableEntityError } from '../utils/errors/errors.js';
 import { setValue } from '../utils/setValue.js';
 
 const validateApiVersion = async (request, response, next) => {

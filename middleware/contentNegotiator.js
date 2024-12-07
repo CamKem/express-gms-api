@@ -1,4 +1,4 @@
-import {NotAcceptableError, UnsupportedMediaTypeError} from "../utils/errors.js";
+import {NotAcceptableError, UnsupportedMediaTypeError} from "../utils/errors/errors.js";
 
 /**
  *  Check the content-type and accept headers of the request
