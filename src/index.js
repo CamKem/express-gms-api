@@ -10,7 +10,7 @@ import {setValue} from "./utils/setValue.js";
 import setUniqueRequestId from "./middleware/setUniqueRequestId.js";
 import rateLimiter from "./middleware/rateLimiter.js";
 import logger from "./utils/logger.js";
-import setupExpressJSDocSwagger from "./docs/swagger.js";
+import setupExpressJSDocSwagger from "../docs/swagger.js";
 
 // Load environment variables
 dotenv.config();

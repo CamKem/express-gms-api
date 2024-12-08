@@ -12,7 +12,7 @@ apiRouter.use(contentNegotiator);
 apiRouter.use(jsonParser);
 
 const registerControllers = () => {
-    const controllersPath = path.resolve('./controllers/api');
+    const controllersPath = path.resolve('./src/controllers/api');
     const apiVersionDirs = fs.readdirSync(controllersPath).filter(dir => dir.startsWith('v'));
 
     apiVersionDirs.forEach(apiVersionDir => {
