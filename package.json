@@ -4,10 +4,8 @@
   "description": "Grocery Management System Backend API",
   "main": "index.js",
   "scripts": {
-    "monitor": "nodemon index.js --trace-warnings",
-    "serve": "node index.js --trace-warnings",
-    "test": "jest",
-    "test:watch": "jest --watch",
+    "dev": "nodemon index.js --trace-warnings",
+    "serve": "node index.js",
     "clear:logs": "rm -rf logs/error.log"
   },
   "type": "module",
@@ -33,12 +31,10 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.8.3",
     "node-fetch": "^3.3.2",
-    "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1",
     "uuid": "^9.0.1"
   },
   "devDependencies": {
-    "jest": "^29.7.0",
     "nodemon": "^3.1.7"
   }
 }
