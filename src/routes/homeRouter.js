@@ -14,15 +14,16 @@ homeRouter.get('/', (req, res, next) => {
             <meta name="author" content="Cameron Kemshal-Bell">
             <meta name="keywords" content="Grocery, Management, System, API">
             <link rel="icon" href="/favicon.ico" type="image/x-icon">
-            <meta property="og:image" content="/gms-og.png">
+            <meta property="og:image" content="https://gms.iterated.tech/gms-og.png">
             <meta property="og:title" content="Grocery Management System API">
             <meta property="og:description" content="Grocery Management System API">
             <meta property="og:url" content="https://gms.iterated.tech">
             <meta property="og:type" content="website">
             <meta property="og:site_name" content="Grocery Management System API">
             <meta name="twitter:card" content="summary_large_image">
+            <meta name="twitter:image" content="https://gms.iterated.tech/gms-og.png">
             <meta name="twitter:site" content="Grocery Management System API">
-            <meta name="twitter:creator" content="@CamKem">
+            <meta name="twitter:creator" content="@CamKemDev">
             <meta name="twitter:title" content="Grocery Management System API">
             <title>Grocery Management System API</title>
             <style>
