@@ -11,12 +11,12 @@ import setUniqueRequestId from "./middleware/setUniqueRequestId.js";
 import rateLimiter from "./middleware/rateLimiter.js";
 import logger from "./utils/logger.js";
 import setupExpressJSDocSwagger from "../docs/swagger.js";
+import path from "node:path";
 
 // Load environment variables
 dotenv.config();
 
 logger('Starting server...');
-logger('environment variables loaded', 'info', process.env);
 
 // App Setup
 const app = express();
@@ -32,6 +32,10 @@ app.use(cors({
     allowedHeaders: "Content-Type,Authorization,Accept",
     optionsSuccessStatus: 200
 }));
+// Serve static files from the public directory, such as images, CSS, and JavaScript
+// This allows the HTML content to reference these files
+// The reference url should be like this: /public/yourfile.png
+app.use(express.static(path.join(process.cwd(), 'public')));
 
 // Mongoose Connection Error Handler
 mongoose.connection.on("error", (err) => {
