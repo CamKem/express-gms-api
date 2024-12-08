@@ -6,6 +6,19 @@ const options = {
         version: '1.0.0',
         title: 'GMS API Endpoints Docs',
         description: 'Documentation describing the API endpoints available in the grocery management system (GMS) API',
+        license: {
+            name: 'MIT',
+            url: 'https://choosealicense.com/licenses/mit/'
+        },
+        contact: {
+            name: 'GMS API Support',
+            url: 'https://gms.iterated.tech',
+            email: 'cam@iterated.tech'
+        },
+        externalDocs: {
+            description: 'Written documentation for the GMS API',
+            url: 'http://gms.iterated.tech/docs'
+        }
     },
     servers: [
         {
@@ -31,13 +44,11 @@ const options = {
         }
     },
     baseDir: process.cwd(), // Your project's root directory
-    basePath: '/api/{version}', // Base path for the API
     filesPattern: [
         './docs/jsdoc/**/*.js',
         // './controllers/api/**/*.js',
         './models/**/*.js',
         './utils/**/*.js',
-
     ],
     swaggerUIPath: '/api-docs', // Endpoint for Swagger UI rendering
     exposeSwaggerUI: true,
