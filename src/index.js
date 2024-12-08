@@ -59,7 +59,9 @@ mongoose.connect(process.env.DB_CONNECTION_STRING)
         const isMainFile = process.argv.filter(arg => arg.includes('index.js')).length > 0;
         if (isMainFile) {
             app.listen(port, () => {
-                console.info(`Server running on ${host}:${port}`);
+                logger(`Server running at ${host}:${port}`);
+            }).on('error', (err) => {
+                logger('Server Error', 'error', err);
             });
         }
     });
