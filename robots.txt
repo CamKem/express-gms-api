@@ -1,0 +1,7 @@
+# Robots File
+
+User-agent: *
+Disallow: /cgi-bin/
+
+# Allow all other content to be crawled
+Allow: /
