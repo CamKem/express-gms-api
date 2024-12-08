@@ -23,7 +23,7 @@ const options = {
     servers: [
         {
             url: 'https://gms.iterated.tech/api/{version}',
-            description: 'Development server',
+            description: 'Production server',
             variables: {
                 version: {
                     enum: [
@@ -46,9 +46,9 @@ const options = {
     baseDir: process.cwd(), // Your project's root directory
     filesPattern: [
         './docs/jsdoc/**/*.js',
-        './controllers/api/**/*.js',
-        './models/**/*.js',
-        './utils/**/*.js',
+        // './src/controllers/api/**/*.js',
+        './src/models/**/*.js',
+        './src/utils/**/*.js',
     ],
     swaggerUIPath: '/api-docs', // Endpoint for Swagger UI rendering
     exposeSwaggerUI: true,
