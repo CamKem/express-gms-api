@@ -32,9 +32,9 @@ app.use(cors({
     allowedHeaders: "Content-Type,Authorization,Accept",
     optionsSuccessStatus: 200
 }));
-// Serve static files from the public directory, such as images, CSS, and JavaScript
+// Serve static files from the public directory.
 // This allows the HTML content to reference these files
-// The reference url should be like this: /public/yourfile.png
+// The reference url should be like this: /cabbage.svg (not /public/cabbage.svg)
 app.use(express.static(path.join(process.cwd(), 'public')));
 
 // Mongoose Connection Error Handler
