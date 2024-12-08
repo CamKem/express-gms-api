@@ -15,6 +15,8 @@ import setupExpressJSDocSwagger from "../docs/swagger.js";
 // Load environment variables
 dotenv.config();
 
+console.log('Environment Variables:', process.env);
+
 // App Setup
 const app = express();
 const port = setValue(process.env.APP_PORT, 3000);
