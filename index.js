@@ -10,12 +10,7 @@ import {setValue} from "./utils/setValue.js";
 import setUniqueRequestId from "./middleware/setUniqueRequestId.js";
 import rateLimiter from "./middleware/rateLimiter.js";
 import logger from "./utils/logger.js";
-import setupExpressJSDocSwagger from "./docs/swaggerExpressJSDoc.js";
-
-import {syncDocBlocks} from "./utils/jsDocSync.js";
-// TODO: implement a function to sync the doc blocks on the controllers
-//  with the docs/jsdoc folder, to avoid having to write the same information
-//syncDocBlocks('./controllers/api/**/*.js');
+import setupExpressJSDocSwagger from "./docs/swagger.js";
 
 // Load environment variables
 dotenv.config();
@@ -37,7 +32,7 @@ app.use(cors({
 
 // Mongoose Connection Error Handler
 mongoose.connection.on("error", (err) => {
-    throw new Error("DB error: " + err);
+    logger('DB Connection Error', 'error', err);
 });
 
 // DB Connection & Server Start
