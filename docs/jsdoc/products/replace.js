@@ -1,7 +1,7 @@
 /**
  * PUT /products/{sku}
  * @summary Replace a product by SKU
- * @tags Products
+ * @tags Products - Perform CRUD operation on products
  * @param {string} sku.path - SKU of the product - eg: XX-1234-56
  * @param {Product} request.body.required - Product object to replace - application/json
  * @security BearerAuth

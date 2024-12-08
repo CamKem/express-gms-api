@@ -45,12 +45,12 @@ const ProductSchema = new mongoose.Schema(
 /**
  * @summary Grocery product definition
  * @typedef {object} Product
- * @property {string} sku.required - The SKU of the product (Format: XX-XXXX-XX)
- * @property {string} name.required - Product name
- * @property {number} price.required - Product price - int64
- * @property {number} stockOnHand.required - Product stock on hand - int64
- * @property {string} createdAt - Product creation date
- * @property {string} updatedAt - Product last update date
+ * @property {string} sku.required - The SKU of the product (Format: XX-XXXX-XX) - eg: "AB-1234-56"
+ * @property {string} name.required - Product name - eg: "Apple"
+ * @property {number} price.required - Product price - int64 eg: 9.99
+ * @property {number} stockOnHand.required - Product stock on hand - int64 eg: 100
+ * @property {string} createdAt - Product creation date - eg: 2024-12-06T03:33:16.299Z
+ * @property {string} updatedAt - Product last update date - eg: 2024-12-06T03:33:16.299Z
  */
 const Product = mongoose.model('Product', ProductSchema);
 

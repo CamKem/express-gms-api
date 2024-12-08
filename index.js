@@ -12,6 +12,11 @@ import rateLimiter from "./middleware/rateLimiter.js";
 import logger from "./utils/logger.js";
 import setupExpressJSDocSwagger from "./docs/swaggerExpressJSDoc.js";
 
+import {syncDocBlocks} from "./utils/jsDocSync.js";
+// TODO: implement a function to sync the doc blocks on the controllers
+//  with the docs/jsdoc folder, to avoid having to write the same information
+//syncDocBlocks('./controllers/api/**/*.js');
+
 // Load environment variables
 dotenv.config();
 
@@ -26,6 +31,7 @@ app.use(setUniqueRequestId);
 app.use(cors({
     origin: "*",
     methods: "GET,HEAD,POST,PUT,PATCH,DELETE",
+    allowedHeaders: "Content-Type,Authorization,Accept",
     optionsSuccessStatus: 200
 }));
 

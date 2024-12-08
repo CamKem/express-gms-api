@@ -1,7 +1,7 @@
 /**
  * PATCH /products/{sku}
  * @summary Update a product by SKU
- * @tags Products
+ * @tags Products - Perform CRUD operations on products
  * @param {string} sku.path - SKU of the product - eg: XX-1234-56
  * @param {Product} request.body.required - Product object to update - application/json
  * @security BearerAuth

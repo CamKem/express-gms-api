@@ -1,7 +1,8 @@
 /**
  * POST /employees/login
  * @summary Login an employee
- * @tags Employees
+ * @tags Employees - Perform CRUD operations on employees
+ * @tags Authentication - Operations for authenticating employees
  * @param {EmployeeLogin} request.body.required - Employee login info
  * @returns {APIResponse} - 200 - Successfully logged in
  * @returns {ErrorResponse} - 401 - Invalid credentials

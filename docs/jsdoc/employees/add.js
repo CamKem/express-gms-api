@@ -1,7 +1,7 @@
 /**
  * POST /employees
  * @summary Add a new employee
- * @tags Employees
+ * @tags Employees - Perform CRUD operations on employees
  * @security BearerAuth
  * @param {Employee} request.body.required - Employee info
  * @return {APIResponse} 201 - Employee successfully created

@@ -1,7 +1,7 @@
 /**
  * POST /products
  * @summary Add a new product
- * @tags Products
+ * @tags Products - Perform CRUD operation on products
  * @param {Product} request.body.required - Product object to be added - application/json
  * @security BearerAuth
  * @returns {APIResponse} - 201 - Product created successfully

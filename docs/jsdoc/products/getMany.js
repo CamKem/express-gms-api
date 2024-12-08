@@ -1,7 +1,7 @@
 /**
  * GET /products
  * @summary Retrieve a list of products
- * @tags Products
+ * @tags Products - Perform CRUD operation on products
  * @return {APIResponse} 200 - success response
  * @return {ErrorResponse} 500 - Internal server error
  *

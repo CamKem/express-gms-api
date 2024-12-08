@@ -15,11 +15,6 @@ import auth from "../../../middleware/authHandler.js";
 /**
  * Product controller
  * @type {Router}
- *
- * @swagger
- * tags:
- *   name: Products
- *   description: Product management
  */
 const products = express.Router();
 
@@ -36,24 +31,24 @@ const docsUrl = `/docs/api/${currentVersion}/products`;
  * @see ./docs/jsdoc/getMany.js
  */
 products.get('/', async (req, res, next) => {
-    const products = await Product.find({}, {__v: 0, _id: 0})
+    await Product.find({}, {__v: 0, _id: 0})
         .exec()
-        .then(products => products)
+        .then(products => {
+            return new APIResponse(req)
+                .withCode('RESOURCE_RETRIEVED')
+                .withDocsUrl(`${docsUrl}#retrieve-a-list-of-products`)
+                .send({
+                    message: 'The products have been successfully retrieved.',
+                    products: products
+                });
+        })
         .catch(err => {
             if (err) {
                 throw new InternalServerError('Products could not be retrieved.')
                     .withCode('RESOURCE_NOT_RETRIEVED')
                     .withDetails('Please try again.')
-                    .withDocsUrl(docsUrl);
+                    .withDocsUrl(`${docsUrl}#retrieve-a-list-of-products`);
             }
-        });
-
-    new APIResponse(req)
-        .withCode('RESOURCE_RETRIEVED')
-        .withDocsUrl(docsUrl)
-        .send({
-            message: 'The products have been successfully retrieved.',
-            products: products
         });
 });
 
@@ -164,7 +159,7 @@ products.post('/', auth, async (req, res, next) => {
  * @returns {ErrorResponse} 500 - Product could not be replaced
  * @see ./docs/jsdoc/replace.js
  */
-products.put(skuRegex, async (req, res, next) => {
+products.put(skuRegex, auth, async (req, res, next) => {
     const {sku} = req.params;
     const {name, price, stockOnHand} = setValue(req.body, {});
     const routeDocsUrl = `${docsUrl}#replace-a-product`;
@@ -231,7 +226,7 @@ products.put(skuRegex, async (req, res, next) => {
  * @returns {ErrorResponse} 500 - Resource not updated
  * @see ./docs/jsdoc/update.js
  */
-products.patch(skuRegex, async (req, res, next) => {
+products.patch(skuRegex, auth, async (req, res, next) => {
     const {sku} = req.params;
     const updateFields = {...req.body} || {};
     const endpointDocsUrl = `${docsUrl}#update-a-product`;
@@ -259,7 +254,6 @@ products.patch(skuRegex, async (req, res, next) => {
         includeResultMetadata: true,
     }).exec()
         .then((result) => {
-            console.log(result);
             if (result.lastErrorObject.updatedExisting === false) {
                 throw new NotFoundError(`Product with SKU ${sku} not found.`)
                     .withCode('PRODUCT_NOT_FOUND')
@@ -297,7 +291,7 @@ products.patch(skuRegex, async (req, res, next) => {
 });
 
 /**
- * DELETE /products/:sku
+ * DELETE /products/{sku}
  * @summary Remove a product by SKU
  * @tags Products
  * @param {string} sku.path - SKU of the product - eg: XX-1234-56
@@ -307,7 +301,7 @@ products.patch(skuRegex, async (req, res, next) => {
  * @returns {ErrorResponse} 500 - Product could not be deleted
  * @see ./docs/jsdoc/delete.js
  */
-products.delete(skuRegex, async (req, res, next) => {
+products.delete(skuRegex, auth, async (req, res, next) => {
     const {sku} = req.params;
     const endpointDocsUrl = `${docsUrl}#remove-a-product`;
 
@@ -316,7 +310,6 @@ products.delete(skuRegex, async (req, res, next) => {
     })
         .exec()
         .then((result,) => {
-            console.log(result);
             if (result.lastErrorObject.n === 0 && result.ok === 1 && result.value === null) {
                 throw new NotFoundError(`Product with SKU ${sku} not found.`)
                     .withCode('RESOURCE_NOT_FOUND')

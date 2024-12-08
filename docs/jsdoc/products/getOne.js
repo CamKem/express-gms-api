@@ -1,7 +1,7 @@
 /**
  * GET /products/{sku}
  * @summary Retrieve a single product by SKU
- * @tags Products
+ * @tags Products - Perform CRUD operation on products
  * @param {string} sku.path - SKU of the product - eg: XX-1234-56
  * @return {APIResponse} 200 - Success response
  * @return {ErrorResponse} 404 - Product not found

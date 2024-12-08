@@ -13,11 +13,6 @@ import auth from "../../../middleware/authHandler.js";
 /**
  * Employees controller
  * @type {Router}
- *
- * @swagger
- * tags:
- *   name: Employees
- *   description: Employee management
  */
 
 const employees = express.Router();
@@ -28,7 +23,6 @@ const docsUrl = `/docs/api/${currentVersion}/employees`;
 /**
  * POST /employees
  * @summary Add a new employee
- * @tags Employees
  * @security BearerAuth
  * @param {Employee} request.body.required - Employee info
  * @return {APIResponse} 201 - Employee successfully created
@@ -90,7 +84,6 @@ employees.post('/', auth, async (req, res, next) => {
 /**
  * POST /employees/login
  * @summary Login an employee
- * @tags Employees
  * @param {EmployeeLogin} request.body.required - Employee login info
  * @returns {APIResponse} - 200 - Successfully logged in
  * @returns {ErrorResponse} - 401 - Invalid credentials
@@ -138,7 +131,6 @@ employees.post('/login', async (req, res, next) => {
                         .withStatusCode(200)
                         .withCode('AUTH_SUCCESS')
                         .withDocsUrl(endpointDocsUrl)
-                        .addProperty('token', token)
                         .send({
                             message: 'Employee successfully logged in.',
                             token: token,
