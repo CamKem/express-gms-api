@@ -1,142 +1,65 @@
-import swaggerJSDoc from 'swagger-jsdoc';
-import swaggerUi from 'swagger-ui-express';
-import path from 'path';
-import fs from 'fs';
+import expressJsdocSwagger from 'express-jsdoc-swagger';
 
-// Function to convert Mongoose schemas to OpenAPI schemas
-const mongooseToOpenAPI = (mongooseSchema) => {
-    const openAPISchema = {
-        type: 'object',
-        properties: {},
-        required: [],
-    };
-
-    mongooseSchema.eachPath((path, schemaType) => {
-        if (path === '__v' || path === '_id') return; // Skip internal fields
-
-        let type;
-        let format;
-        let enumValues = [];
-
-        switch (schemaType.instance) {
-            case 'String':
-                type = 'string';
-                if (schemaType.enumValues && schemaType.enumValues.length > 0) {
-                    enumValues = schemaType.enumValues;
-                }
-                break;
-            case 'Number':
-                type = 'number';
-                break;
-            case 'Date':
-                type = 'string';
-                format = 'date-time';
-                break;
-            case 'Boolean':
-                type = 'boolean';
-                break;
-            case 'Array':
-                type = 'array';
-                // Determine the type of items
-                if (schemaType.caster.instance === 'String') {
-                    openAPISchema.properties[path] = {
-                        type: 'array',
-                        items: { type: 'string' },
-                    };
-                }
-                // Handle other array types as needed
-                return; // Skip further processing
-            case 'ObjectID':
-                type = 'string';
-                format = 'uuid'; // or 'objectid' as a custom format
-                break;
-            default:
-                type = 'string';
-        }
-
-        openAPISchema.properties[path] = { type };
-        if (format) {
-            openAPISchema.properties[path].format = format;
-        }
-        if (enumValues.length > 0) {
-            openAPISchema.properties[path].enum = enumValues;
-        }
-        if (schemaType.isRequired) {
-            openAPISchema.required.push(path);
-        }
-    });
-
-    return openAPISchema;
-};
-
-// Initialize Swagger definitions
-const initializeSwagger = () => {
-    const versions = ['v1', 'v2']; // List your API versions here
-    const swaggerDefinitions = {};
-
-    versions.forEach(version => {
-        // Path to version-specific controllers
-        const controllersPath = path.resolve(`./controllers/api/${version}`);
-
-        // Convert each Mongoose model to OpenAPI schema
-        const models = fs.readdirSync(controllersPath).filter(file => file.endsWith('.js'));
-
-        models.forEach(file => {
-            const modelPath = path.join(controllersPath, file);
-            const module = import(modelPath).then(module => { return module.default }).catch(err => { console.error(err); });
-            if (module && module.schema) {
-                swaggerDefinitions[module.modelName] = mongooseToOpenAPI(module.schema);
-            }
-        });
-    });
-    return swaggerDefinitions;
-};
-
-// Define Swagger options
-const swaggerOptions = {
-    definition: {
-        openapi: '3.0.0',
-        info: {
-            title: 'GMS API Documentation',
-            description: 'API Documentation for the GMS API',
-            version: '1.0.0',
+// Swagger definition
+const options = {
+    info: {
+        version: '1.0.0',
+        title: 'GMS API Endpoints Docs',
+        description: 'Documentation describing the API endpoints available in the grocery management system (GMS) API',
+        license: {
+            name: 'MIT',
+            url: 'https://choosealicense.com/licenses/mit/'
         },
-        servers: [
-            {
-                url: 'http://localhost:3000/api/{version}',
-                description: 'Development server',
-                variables: {
-                    version: {
-                        enum: [
-                            'v1',
-                            'v2'
-                        ],
-                        default: 'v2',
-                        description: 'API version',
-                    }
-                }
-            },
-        ],
-        components: {
-            securitySchemes: {
-                jwt: {
-                    type: 'apiKey',
-                    in: 'cookie',
-                    name: 'token',
-                },
-            },
-            schemas: initializeSwagger(),
+        contact: {
+            name: 'GMS API Support',
+            url: 'https://gms.iterated.tech',
+            email: 'cam@iterated.tech'
         },
+        externalDocs: {
+            description: 'Written documentation for the GMS API',
+            url: 'https://gms.iterated.tech/docs'
+        }
     },
-    // Paths to files containing OpenAPI definitions (JSDoc annotations)
-    apis: ['./controllers/api/**/*.js'], // Adjust the path as needed
+    servers: [
+        {
+            url: 'https://gms.iterated.tech/api/{version}',
+            description: 'Development server',
+            variables: {
+                version: {
+                    enum: [
+                        'v1',
+                        'v2'
+                    ],
+                    default: 'v2',
+                    description: 'API version',
+                }
+            }
+        },
+    ],
+    security: {
+        BearerAuth: {
+            type: 'http',
+            scheme: 'bearer',
+            bearerFormat: "JWT"
+        }
+    },
+    baseDir: process.cwd(), // Your project's root directory
+    filesPattern: [
+        './docs/jsdoc/**/*.js',
+        './controllers/api/**/*.js',
+        './models/**/*.js',
+        './utils/**/*.js',
+    ],
+    swaggerUIPath: '/api-docs', // Endpoint for Swagger UI rendering
+    exposeSwaggerUI: true,
+    exposeApiDocs: true,
+    apiDocsPath: '/api-docs/raw', // Endpoint for accessing API docs
+    notRequiredAsNullable: false,
 };
 
-const specs = swaggerJSDoc(swaggerOptions);
-
-// Setup Swagger UI
-const setupSwagger = (app) => {
-    app.use('/docs', swaggerUi.serve, swaggerUi.setup(specs));
+// Initialize Swagger
+const setupExpressJSDocSwagger = (app) => {
+    expressJsdocSwagger(app)(options);
 };
 
-export default setupSwagger;
+export default setupExpressJSDocSwagger;
