@@ -193,7 +193,7 @@ homeRouter.get('/', (req, res, next) => {
                 </div>
             </main>           
             <footer>
-                <p>&copy; ${new Date().getFullYear()}Grocery Management System</p>
+                <p>&copy; ${new Date().getFullYear()} Grocery Management System</p>
             </footer>
         </body>
         </html>`;
