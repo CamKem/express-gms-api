@@ -14,7 +14,7 @@
  * @function withRequestId - Set the request ID
  * @function withDocsUrl - Set the URL to the API documentation
  * @function withLocation - Set the location header
- * @function withHeaders - Set response headers
+ * @function withHeader - Set a header
  * @function send - Send the response
  */
 class BaseResponse {
@@ -54,10 +54,8 @@ class BaseResponse {
         return this;
     }
 
-    withHeaders(array) {
-        array.forEach(([key, value]) => {
-            this.request.res.setHeader(key, value);
-        });
+    withHeader(key, value) {
+        this.request.res.setHeader(key, value);
         return this;
     }
 
