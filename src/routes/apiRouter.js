@@ -28,8 +28,7 @@ const registerControllers = () => {
                 module = module.default;
 
                 if (typeof module !== 'function' || !(module instanceof express.Router)) {
-                    console.error(`Invalid controller configuration in ${controllerPath}`);
-                    return;
+                    throw new Error(`Invalid controller configuration: ${controllerPath}`);
                 }
 
                 apiRouter.use(`/${apiVersionDir}/${resourceName}`, module);

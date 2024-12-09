@@ -2,6 +2,9 @@ import fs from 'fs';
 import path from 'node:path';
 import { NotFoundError, UnprocessableEntityError } from '../utils/errors/errors.js';
 import { setValue } from '../utils/setValue.js';
+import dotenv from "dotenv";
+
+dotenv.config();
 
 /**
  * Validates the API version requested by the client
@@ -12,10 +15,10 @@ import { setValue } from '../utils/setValue.js';
  */
 const validateApiVersion = async (request, response, next) => {
     const version = setValue(request.url.split('/')[1], null);
-    const versionNumber = setValue(parseInt(version.replace('v', ''), 10), 0);
+    const requestVersionNumber = setValue(parseInt(version.replace('v', ''), 10), 1);
     const currentVersion = setValue(process.env.API_VERSION, 'v1');
     const endpointDocsUrl = `/docs/api/${currentVersion}/`;
-    const currentVersionNumber = setValue(currentVersion.split('v')[1], 1);
+    const currentVersionNumber = setValue(parseInt(currentVersion.replace('v', ''), 10), 1);
 
     if (!version || !/^v\d+$/.test(version)) {
         throw new NotFoundError('No API version specified')
@@ -24,8 +27,9 @@ const validateApiVersion = async (request, response, next) => {
             .withDocsUrl(endpointDocsUrl);
     }
 
-    const folderPath = path.resolve('controllers', 'api', `v${versionNumber}`);
-    if (!(versionNumber <= currentVersionNumber) || !(versionNumber > 0) || !fs.existsSync(folderPath)) {
+    const folderPath = path.resolve('src', 'controllers', 'api', `v${requestVersionNumber}`);
+    const isVersionNumberVersion = (requestVersionNumber <= currentVersionNumber) && (requestVersionNumber > 0) && fs.existsSync(folderPath);
+    if (!isVersionNumberVersion) {
         throw new UnprocessableEntityError('Invalid API version requested')
             .withDetails(`The current API version is ${currentVersion}`)
             .withCode('INVALID_API_VERSION')
