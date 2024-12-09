@@ -14,7 +14,7 @@ homeRouter.get('/', (req, res, next) => {
             <meta name="author" content="Cameron Kemshal-Bell">
             <meta name="keywords" content="Grocery, Management, System, API">
             <link rel="icon" href="/favicon.ico" type="image/x-icon">
-            <meta property="og:image" content="https://gms.iterated.tech/gms-og.png?">
+            <meta property="og:image" content="https://gms.iterated.tech/gms-og.png">
             <meta property="og:image:alt" content="Grocery Management System API">
             <meta property="og:title" content="Grocery Management System API">
             <meta property="og:description" content="A RESTful API for managing grocery products, orders, carts, employees, and customers.">
@@ -22,7 +22,7 @@ homeRouter.get('/', (req, res, next) => {
             <meta property="og:type" content="website">
             <meta property="og:site_name" content="Grocery Management System API">
             <meta name="twitter:card" content="summary_large_image">
-            <meta name="twitter:image" content="https://gms.iterated.tech/gms-og.png?">
+            <meta name="twitter:image" content="https://gms.iterated.tech/gms-og.png">
             <meta name="twitter:site" content="Grocery Management System API">
             <meta name="twitter:creator" content="@CamKemDev">
             <meta name="twitter:title" content="Grocery Management System API">
@@ -190,7 +190,7 @@ homeRouter.get('/', (req, res, next) => {
                         <li>Testing</li>
                         <li>And more...</li>
                     </ul>
-                    <p>View the project on:<a href="https://github.com/CamKem/express-gms-api" class="shadow"><img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub Logo" style="height: 40px;"> GitHub</a>.</p>
+                    <p>View the project on:<a href="https://github.com/CamKem/express-gms-api" class="shadow"><img src="/github.svg" alt="GitHub Logo" style="height: 40px;"> GitHub</a>.</p>
                 </div>
             </main>           
             <footer>
